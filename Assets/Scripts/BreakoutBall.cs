@@ -29,25 +29,31 @@ public class BreakoutBall : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         // FOR NOW - only react to the paddle
-        if (!collision.collider.CompareTag("Paddle")) return;
+        if (collision.collider.CompareTag("Paddle"))
+        {
+            // contact point 
+            ContactPoint2D cp = collision.GetContact(0);
+            Vector2 contactPoint = cp.point;     // world-space contact position
+            Vector2 normal = cp.normal;   // collision normal (direction of the surface)
+            Vector2 paddleCenter = collision.collider.bounds.center;
+            float offsetX = contactPoint.x - paddleCenter.x;    // 0 -> hit center of paddle, > 0 value -> hit right side of paddle
+            float halfWidthPaddle = collision.collider.bounds.extents.x; // calculate the paddle_width/2 to normalize offset
+            float normalizedXOffset = offsetX / halfWidthPaddle;
 
-        // contact point 
-        ContactPoint2D cp = collision.GetContact(0);
-        Vector2 contactPoint = cp.point;     // world-space contact position
-        Vector2 normal = cp.normal;   // collision normal (direction of the surface)
-        Vector2 paddleCenter = collision.collider.bounds.center;
-        float offsetX = contactPoint.x - paddleCenter.x;    // 0 -> hit center of paddle, > 0 value -> hit right side of paddle
-        float halfWidthPaddle = collision.collider.bounds.extents.x; // calculate the paddle_width/2 to normalize offset
-        float normalizedXOffset = offsetX / halfWidthPaddle;
+            Vector2 newDirection = new Vector2(normalizedXOffset, 1f).normalized;
+            rb.linearVelocity = newDirection * 14f;
 
-        Vector2 newDirection = new Vector2(normalizedXOffset, 1f).normalized;
-        rb.linearVelocity = newDirection * 14f;
-
-
-
-
-        Debug.Log($"Hit paddle at {contactPoint}, normal {normal}");
-        //Debug.Log($"The paddle's center is at {paddleCenter}");
-        Debug.Log($"XOffset relative to padde {normalizedXOffset}");
+            Debug.Log($"Hit paddle at {contactPoint}, normal {normal}");
+            //Debug.Log($"The paddle's center is at {paddleCenter}");
+            Debug.Log($"XOffset relative to padde {normalizedXOffset}");
+        }
+        else if (collision.collider.CompareTag("Floor"))
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            return;
+        }
     }
 }
