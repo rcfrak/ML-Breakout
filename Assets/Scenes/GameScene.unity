@@ -827,7 +827,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: e1a0f61039f8a4d2bbf43fe7ced82430, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -887,6 +887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d088c8079e1d477a8e29a0cf657d8ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BreakoutBall
+  ballSpeed: 11
 --- !u!1 &1058467780
 GameObject:
   m_ObjectHideFlags: 0

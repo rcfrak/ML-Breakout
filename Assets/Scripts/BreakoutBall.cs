@@ -7,21 +7,23 @@ public class BreakoutBall : MonoBehaviour
 {
     private Rigidbody2D rb;
     private bool hasFallen = false;
+    public float ballSpeed = 12f;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;   // ensures ball does not fall at start
-        rb.linearVelocity = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;   // ball starts still
     }
 
     void Update()
     {
-        // drop ball only after player presses the space bar
+        // launch towards paddle only after player presses the space bar
         if (hasFallen) return;
         if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            rb.gravityScale = 1f;
+            rb.gravityScale = 0f;
+            rb.linearVelocity = Vector2.down * ballSpeed;   
             hasFallen = true;
         }
     }
@@ -41,7 +43,7 @@ public class BreakoutBall : MonoBehaviour
         float normalizedXOffset = offsetX / halfWidthPaddle;
 
         Vector2 newDirection = new Vector2(normalizedXOffset, 1f).normalized;
-        rb.linearVelocity = newDirection * 14f;
+        rb.linearVelocity = newDirection * ballSpeed;
 
 
 
