@@ -17,7 +17,7 @@ public class PaddleMovement : MonoBehaviour
         Vector2 move = MoveAction.ReadValue<Vector2>();
         //Debug.Log(move);
         Vector2 position = (Vector2)transform.position + move * 8.00f * Time.deltaTime; // Change paddle position with move input, speed, per second for frames.
-        position.x = Mathf.Clamp(position.x, -11.40f, 11.40f);  // Lock paddle in play space.
+        position.x = Mathf.Clamp(position.x, -5.90f, 5.90f);  // Lock paddle in play space.
         transform.position = position;
     }
 }
