@@ -43,7 +43,7 @@ public class BreakoutBall : MonoBehaviour
             float normalizedXOffset = offsetX / halfWidthPaddle;
 
             Vector2 newDirection = new Vector2(normalizedXOffset, 1f).normalized;
-            rb.linearVelocity = newDirection * 14f;
+            rb.linearVelocity = newDirection * ballSpeed;
 
             Debug.Log($"Hit paddle at {contactPoint}, normal {normal}");
             //Debug.Log($"The paddle's center is at {paddleCenter}");
