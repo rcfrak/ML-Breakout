@@ -378,6 +378,8 @@ MonoBehaviour:
       m_Action: Move
       m_Flags: 8
     m_Flags: 0
+  left_boundary: -7.85
+  right_boundary: 7.85
 --- !u!212 &407406598
 SpriteRenderer:
   serializedVersion: 2
@@ -428,7 +430,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.10933607, g: 0.36573517, b: 0.5943396, a: 1}
+  m_Color: {r: 0.52064794, g: 0.5518857, b: 0.5660378, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -447,7 +449,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -4, z: 0}
-  m_LocalScale: {x: 5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1.8, y: 0.35, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -632,7 +634,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  m_BackGroundColor: {r: 0.04004984, g: 0.14179994, b: 0.18867922, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -908,7 +910,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -988,7 +990,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d088c8079e1d477a8e29a0cf657d8ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BreakoutBall
-  ballSpeed: 11
+  ballSpeed: 7
 --- !u!1 &1058467780
 GameObject:
   m_ObjectHideFlags: 0
