@@ -1,9 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class PaddleMovement : MonoBehaviour
 {
     public InputAction MoveAction;
+    public float left_boundary = -8f;
+    public float right_boundary = 8f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,7 +20,7 @@ public class PaddleMovement : MonoBehaviour
         Vector2 move = MoveAction.ReadValue<Vector2>();
         //Debug.Log(move);
         Vector2 position = (Vector2)transform.position + move * 8.00f * Time.deltaTime; // Change paddle position with move input, speed, per second for frames.
-        position.x = Mathf.Clamp(position.x, -5.90f, 5.90f);  // Lock paddle in play space.
+        position.x = Mathf.Clamp(position.x, left_boundary, right_boundary);  // Lock paddle in play space.
         transform.position = position;
     }
 }
