@@ -9,7 +9,7 @@ public class LevelGenerator : MonoBehaviour
     public GameObject brickPrefab;
 
     [Header("Spacing between bricks and top padding")]
-    public Vector2 cellSize = new Vector2(1.3f, 0.42f);  // spacing between bricks
+    public Vector2 cellSize = new Vector2(1.3f, 0.42f);  // spacing between bricks. brick is 1.25 width and 0.40 height
     public float topPadding = 1.0f;                      // space reserved for UI at top
 
     private Color[] rowColors = new Color[]
