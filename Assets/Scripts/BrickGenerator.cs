@@ -3,52 +3,54 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
-{
-    // 15 wide, 6 deep (can change these if you click on level generator in hierarchy, I find that 13 and 5 might work better honestly. 
-    // also if you change it to less then 6, you take out the top rows first, which eventually will be getting 2 hit code so this makes it easy to create easy levels for the 
-    // first few stages if we decide to do that.
-    public Vector2Int size = new Vector2Int(15, 6);
-
-    // 1.0 width 0.5 height, width offset is 1.15 and height offset is 0.65
-    public Vector2 offset = new Vector3(1.15f, 0.65f);
+{   
+    // 13 wide, 8 deep
+    public Vector2Int size = new Vector2Int(13, 8);
     public GameObject brickPrefab;
 
-    // color list to be called in level generator
+    [Header("Spacing between bricks and top padding")]
+    public Vector2 cellSize = new Vector2(1.3f, 0.42f);  // spacing between bricks
+    public float topPadding = 1.0f;                      // space reserved for UI at top
+
     private Color[] rowColors = new Color[]
     {
-        new Color(0.5f, 0f, 0.5f), // Purple (bottom)
-        Color.blue,               // Dark Blue
-        Color.green,              // Green
-        Color.yellow,             // Yellow
-        new Color(1f, 0.5f, 0f),  // Orange
-        Color.red                 // Red (top)
+        Color.hotPink,
+        Color.red,
+        new Color(1f, 0.5f, 0f),   // orange
+        Color.yellow,
+        Color.green,
+        Color.blue,
+        new Color(0.5f, 0f, 0.5f), // purple
+        new Color(0f, 0.9f, 0.85f) // teal       
     };
 
-    private void Awake()
+    void Awake()
     {
+        
         GenerateLevel();
     }
 
     void GenerateLevel()
     {
+        Camera cam = Camera.main;
+        float camTop = cam.transform.position.y + cam.orthographicSize;
+        float topY = camTop - topPadding;
+        float gridWidth = (size.x - 1) * cellSize.x;
+
         for (int i = 0; i < size.x; i++) // Columns/X-axis
         {
             for (int j = 0; j < size.y; j++) // Rows/Y-axis
             {
-                // Instantiate the brick as a child of this object
                 GameObject newBrick = Instantiate(brickPrefab, transform);
 
-                // Center the grid horizontally based on the size and offset specified prior
-                float xPos = ((size.x - 1) * 0.5f - i) * offset.x;
-                float yPos = j * offset.y;
+                float x = 0 - (gridWidth * 0.5f) + i * cellSize.x;
+                float y = topY - j * cellSize.y; // goes downward from the top
+                newBrick.transform.position = new Vector3(x, y, 0f);
 
-                newBrick.transform.localPosition = new Vector3(-xPos, yPos, 0);
-
-                // apply the color
-                SpriteRenderer renderer = newBrick.GetComponent<SpriteRenderer>();
+                // apply the color by row
+                var renderer = newBrick.GetComponent<SpriteRenderer>();
                 if (renderer != null)
                 {
-                    // assign color by row, starting from purple going to red
                     renderer.color = rowColors[j % rowColors.Length];
                 }
             }
