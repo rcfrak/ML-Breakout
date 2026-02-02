@@ -45,9 +45,7 @@ public class BreakoutBall : MonoBehaviour
             Vector2 newDirection = new Vector2(normalizedXOffset, 1f).normalized;
             rb.linearVelocity = newDirection * ballSpeed;
 
-            Debug.Log($"Hit paddle at {contactPoint}, normal {normal}");
-            //Debug.Log($"The paddle's center is at {paddleCenter}");
-            Debug.Log($"XOffset relative to padde {normalizedXOffset}");
+            Debug.Log($"Hit paddle! XOffset: {normalizedXOffset}");
         }
         else if (collision.collider.CompareTag("Floor"))
         {
