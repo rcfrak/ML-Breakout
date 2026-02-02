@@ -13,7 +13,7 @@ public class GamePlayLoop : MonoBehaviour
     public UIDocument uiDocument;
 
     private int numBricks = 0;
-    public int scoreMultiplier = 10;
+    public const int scoreMultiplier = 10;
     private int initialBricks = 0;
     private int bricksBroken = 0;
     private int score = 0;
@@ -26,9 +26,7 @@ public class GamePlayLoop : MonoBehaviour
         //adds method to list of things done when the button is clicked
         restartButton.clicked += ReloadScene;
 
-        //The initial quantity could be saved to calculate a score in the gameplay loop
         numBricks = levelGenerator.transform.childCount;
-        score = 0;
         bricksBroken = 0;
         initialBricks = numBricks;
     }
@@ -40,15 +38,9 @@ public class GamePlayLoop : MonoBehaviour
         numBricks = levelGenerator.transform.childCount;
         bricksBroken = initialBricks - numBricks;
         score = bricksBroken * scoreMultiplier;
-        Debug.Log(score);
+        Debug.Log(score + GameManager.getSavedScore());
 
-
-        if (breakoutBall == null)
-        {
-            restartButton.style.display = DisplayStyle.Flex;
-        }
-
-        if (numBricks == 0)
+        if (breakoutBall == null || numBricks == 0)
         {
             restartButton.style.display = DisplayStyle.Flex;
         }
@@ -58,6 +50,30 @@ public class GamePlayLoop : MonoBehaviour
     //See referenced tutorial step 9.1
     void ReloadScene()
     {
+        GameManager.addScore(score);
+        if (numBricks == 0)
+        {
+            GameManager.addWin();
+        }
+        else
+        {
+            GameManager.gameLost();
+        }
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public int getScore()
+    {
+        return score;
+    }
+    
+    public int getInitBricks()
+    {
+        return initialBricks;
+    }
+
+    public int getBricksBroken()
+    {
+        return bricksBroken;
     }
 }
