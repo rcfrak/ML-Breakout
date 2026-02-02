@@ -1,7 +1,6 @@
 // for childCount https://docs.unity3d.com/6000.3/Documentation/ScriptReference/Transform-childCount.html
 // for general script, https://learn.unity.com/course/2d-beginner-game-sprite-flight/tutorial/restart-the-game-with-a-bang?version=6.3
 
-
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
@@ -14,6 +13,10 @@ public class GamePlayLoop : MonoBehaviour
     public UIDocument uiDocument;
 
     private int numBricks = 0;
+    public int scoreMultiplier = 10;
+    private int initialBricks = 0;
+    private int bricksBroken = 0;
+    private int score = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,6 +28,9 @@ public class GamePlayLoop : MonoBehaviour
 
         //The initial quantity could be saved to calculate a score in the gameplay loop
         numBricks = levelGenerator.transform.childCount;
+        score = 0;
+        bricksBroken = 0;
+        initialBricks = numBricks;
     }
 
     // Update is called once per frame
@@ -32,6 +38,10 @@ public class GamePlayLoop : MonoBehaviour
     {
         //count the number of brick clones remaining hierarchically under the levelGenerator
         numBricks = levelGenerator.transform.childCount;
+        bricksBroken = initialBricks - numBricks;
+        score = bricksBroken * scoreMultiplier;
+        Debug.Log(score);
+
 
         if (breakoutBall == null)
         {
