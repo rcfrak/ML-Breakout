@@ -1,7 +1,6 @@
 // for childCount https://docs.unity3d.com/6000.3/Documentation/ScriptReference/Transform-childCount.html
 // for general script, https://learn.unity.com/course/2d-beginner-game-sprite-flight/tutorial/restart-the-game-with-a-bang?version=6.3
 
-
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
@@ -14,6 +13,10 @@ public class GamePlayLoop : MonoBehaviour
     public UIDocument uiDocument;
 
     private int numBricks = 0;
+    public const int scoreMultiplier = 10;
+    private int initialBricks = 0;
+    private int bricksBroken = 0;
+    private int score = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,8 +26,9 @@ public class GamePlayLoop : MonoBehaviour
         //adds method to list of things done when the button is clicked
         restartButton.clicked += ReloadScene;
 
-        //The initial quantity could be saved to calculate a score in the gameplay loop
         numBricks = levelGenerator.transform.childCount;
+        bricksBroken = 0;
+        initialBricks = numBricks;
     }
 
     // Update is called once per frame
@@ -32,13 +36,11 @@ public class GamePlayLoop : MonoBehaviour
     {
         //count the number of brick clones remaining hierarchically under the levelGenerator
         numBricks = levelGenerator.transform.childCount;
+        bricksBroken = initialBricks - numBricks;
+        score = bricksBroken * scoreMultiplier;
+        Debug.Log(score + GameManager.getSavedScore());
 
-        if (breakoutBall == null)
-        {
-            restartButton.style.display = DisplayStyle.Flex;
-        }
-
-        if (numBricks == 0)
+        if (breakoutBall == null || numBricks == 0)
         {
             restartButton.style.display = DisplayStyle.Flex;
         }
@@ -48,6 +50,30 @@ public class GamePlayLoop : MonoBehaviour
     //See referenced tutorial step 9.1
     void ReloadScene()
     {
+        GameManager.addScore(score);
+        if (numBricks == 0)
+        {
+            GameManager.addWin();
+        }
+        else
+        {
+            GameManager.gameLost();
+        }
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public int getScore()
+    {
+        return score;
+    }
+    
+    public int getInitBricks()
+    {
+        return initialBricks;
+    }
+
+    public int getBricksBroken()
+    {
+        return bricksBroken;
     }
 }
