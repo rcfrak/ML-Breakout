@@ -38,7 +38,7 @@ public class GamePlayLoop : MonoBehaviour
         numBricks = levelGenerator.transform.childCount;
         bricksBroken = initialBricks - numBricks;
         score = bricksBroken * scoreMultiplier;
-        Debug.Log(score + GameManager.getSavedScore());
+        Debug.Log(score + GameManager.Instance.getSavedScore());
 
         if (breakoutBall == null || numBricks == 0)
         {
@@ -50,30 +50,15 @@ public class GamePlayLoop : MonoBehaviour
     //See referenced tutorial step 9.1
     void ReloadScene()
     {
-        GameManager.addScore(score);
+        GameManager.Instance.addScore(score);
         if (numBricks == 0)
         {
-            GameManager.addWin();
+            GameManager.Instance.addWin();
         }
         else
         {
-            GameManager.gameLost();
+            GameManager.Instance.gameLost();
         }
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    public int getScore()
-    {
-        return score;
-    }
-    
-    public int getInitBricks()
-    {
-        return initialBricks;
-    }
-
-    public int getBricksBroken()
-    {
-        return bricksBroken;
     }
 }
