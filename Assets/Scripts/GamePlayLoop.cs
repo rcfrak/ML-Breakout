@@ -33,7 +33,6 @@ public class GamePlayLoop : MonoBehaviour
     void Update()
     {
         CountBricks();
-
         if (breakoutBall == null || numBricks == 0)
         {
             restartButton.style.display = DisplayStyle.Flex;
@@ -44,17 +43,18 @@ public class GamePlayLoop : MonoBehaviour
     //See referenced tutorial step 9.1
     void ReloadScene()
     {
-        GameManager.Instance.addScore(score);
+        ScoreManager.Instance.addScore(score);
         if (numBricks == 0)
         {
-            GameManager.Instance.addWin();
+            ScoreManager.Instance.addWin();
         }
         else
         {
-            GameManager.Instance.gameLost();
+            ScoreManager.Instance.gameLost();
         }
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
 
     void CountBricks()
     {
@@ -68,7 +68,5 @@ public class GamePlayLoop : MonoBehaviour
             bricksBroken = initialBricks - numBricks;
             score = bricksBroken * scoreMultiplier;
         }
-
-        Debug.Log(score + GameManager.Instance.getSavedScore());
     }
 }
