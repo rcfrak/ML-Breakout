@@ -4,7 +4,8 @@
  * The game manager keeps track of the player's score between scene reloads, 
  * preserving their score if they clear a level.
  *
- * To access object from another script, use ScoreManager.Instance
+ * To access this object from another script, use ScoreManager.Instance and
+ * do not add it to a game scene.
  */
 
 using System.Collections;

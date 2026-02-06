@@ -1,21 +1,16 @@
-// for childCount https://docs.unity3d.com/6000.3/Documentation/ScriptReference/Transform-childCount.html
 // for general script, https://learn.unity.com/course/2d-beginner-game-sprite-flight/tutorial/restart-the-game-with-a-bang?version=6.3
 
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 
-public class GamePlayLoop : MonoBehaviour
+public class PlayLoop : MonoBehaviour
 {
+    private Observer observer;
     private Button restartButton;
-    public GameObject breakoutBall;
-    public GameObject levelGenerator;
     public UIDocument uiDocument;
 
     public const int scoreMultiplier = 10;
-    private int numBricks = 0;
-    private int initialBricks = 0;
-    private int bricksBroken = 0;
     private int score = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -26,47 +21,44 @@ public class GamePlayLoop : MonoBehaviour
         //adds method to list of things done when the button is clicked
         restartButton.clicked += ReloadScene;
 
-        CountBricks();
+        //link to observer object in GameManager
+        observer = GetComponent<Observer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        CountBricks();
-        if (breakoutBall == null || numBricks == 0)
+        score = observer.getBricksBroken() * scoreMultiplier;
+
+        if (observer.sawWin)
         {
             restartButton.style.display = DisplayStyle.Flex;
         }
+        else if (observer.sawLoss)
+        {
+            restartButton.style.display = DisplayStyle.Flex;
+        }
+
+        Debug.Log(score + ScoreManager.Instance.getSavedScore());
     }
- 
+
     //Reload the scene by loading the scene with current scene name
     //See referenced tutorial step 9.1
     void ReloadScene()
     {
+        //Save the score by adding it to the cumulative score
         ScoreManager.Instance.addScore(score);
-        if (numBricks == 0)
+
+        if (observer.sawWin)
         {
             ScoreManager.Instance.addWin();
         }
-        else
+        else if (observer.sawLoss)
         {
             ScoreManager.Instance.gameLost();
         }
+
+        //Now reload the scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-
-    void CountBricks()
-    {
-        numBricks = levelGenerator.transform.childCount;
-        if (initialBricks == 0)
-        {
-            initialBricks = numBricks;
-        }
-        else
-        {
-            bricksBroken = initialBricks - numBricks;
-            score = bricksBroken * scoreMultiplier;
-        }
     }
 }
