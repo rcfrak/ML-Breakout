@@ -1,4 +1,8 @@
-// for general script, https://learn.unity.com/course/2d-beginner-game-sprite-flight/tutorial/restart-the-game-with-a-bang?version=6.3
+/* for general script, https://learn.unity.com/course/2d-beginner-game-sprite-flight/tutorial/restart-the-game-with-a-bang?version=6.3
+ * This class is intended to control the high level flow of the game, serving up  
+ * UI and loading/reloading scenes when needed. It utilizes the Scorer and Observer
+ * GameManager components to help manage the game. 
+ */
 
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -27,6 +31,7 @@ public class PlayLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // This conditional is split to prepare for different win/loss UIs
         if (observer.sawWin)
         {
             restartButton.style.display = DisplayStyle.Flex;
@@ -41,6 +46,7 @@ public class PlayLoop : MonoBehaviour
     //See referenced tutorial step 9.1
     void ReloadScene()
     {
+        //tell the scorer to write data before reloading the scene
         if (observer.sawWin)
         {
             scorer.writeWin();

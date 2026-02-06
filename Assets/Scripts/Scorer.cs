@@ -1,3 +1,8 @@
+/* This class calculates a score for each round based on the number of bricks 
+ * broken thus far. The scorer communicates with ScoreStorage to write scores
+ * at the end of a round (win or loss), and get a cumulative score
+ */
+
 using UnityEngine;
 
 public class Scorer : MonoBehaviour
