@@ -12,8 +12,8 @@ public class GamePlayLoop : MonoBehaviour
     public GameObject levelGenerator;
     public UIDocument uiDocument;
 
-    private int numBricks = 0;
     public const int scoreMultiplier = 10;
+    private int numBricks = 0;
     private int initialBricks = 0;
     private int bricksBroken = 0;
     private int score = 0;
@@ -26,19 +26,13 @@ public class GamePlayLoop : MonoBehaviour
         //adds method to list of things done when the button is clicked
         restartButton.clicked += ReloadScene;
 
-        numBricks = levelGenerator.transform.childCount;
-        bricksBroken = 0;
-        initialBricks = numBricks;
+        CountBricks();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //count the number of brick clones remaining hierarchically under the levelGenerator
-        numBricks = levelGenerator.transform.childCount;
-        bricksBroken = initialBricks - numBricks;
-        score = bricksBroken * scoreMultiplier;
-        Debug.Log(score + GameManager.Instance.getSavedScore());
+        CountBricks();
 
         if (breakoutBall == null || numBricks == 0)
         {
@@ -60,5 +54,21 @@ public class GamePlayLoop : MonoBehaviour
             GameManager.Instance.gameLost();
         }
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    void CountBricks()
+    {
+        numBricks = levelGenerator.transform.childCount;
+        if (initialBricks == 0)
+        {
+            initialBricks = numBricks;
+        }
+        else
+        {
+            bricksBroken = initialBricks - numBricks;
+            score = bricksBroken * scoreMultiplier;
+        }
+
+        Debug.Log(score + GameManager.Instance.getSavedScore());
     }
 }
