@@ -1465,34 +1465,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GamePlayLoop
   uiDocument: {fileID: 1511604868}
 --- !u!114 &1511604868
---- !u!114 &1511604870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1511604866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78fc50088ff1ac04d8ac89572b58f176, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Scorer
-  breakoutBall: {fileID: 766022262}
-  levelGenerator: {fileID: 754994933}
-  sawLoss: 0
-  sawWin: 0
---- !u!114 &1511604871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1511604866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e81ebec45ea34b94cb71c2c679ddb110, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Scorer
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1530,6 +1502,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1511604870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511604866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78fc50088ff1ac04d8ac89572b58f176, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Scorer
+  breakoutBall: {fileID: 766022262}
+  levelGenerator: {fileID: 754994933}
+  sawLoss: 0
+  sawWin: 0
+--- !u!114 &1511604871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511604866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e81ebec45ea34b94cb71c2c679ddb110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Scorer
 --- !u!1 &1838410162
 GameObject:
   m_ObjectHideFlags: 0
