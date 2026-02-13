@@ -22,6 +22,8 @@ public class Observer : MonoBehaviour
     // The number of bricks that have been broken thus far
     private int bricksBroken = 0;
 
+    public bool EpisodeOver => sawLoss || sawWin;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -64,5 +66,15 @@ public class Observer : MonoBehaviour
     public int getBricksBroken()
     {
         return bricksBroken;
+    }
+
+    // For training mode reset after each episode.
+    public void ResetObserver()
+    {
+        sawLoss = false;
+        sawWin = false;
+        numBricks = 0;
+        initialBricks = 0;
+        bricksBroken = 0;
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PaddleMovement : MonoBehaviour
 {
+    [SerializeField] private PlayLoop playLoop;
     public InputAction MoveAction;
     private Rigidbody2D rigid_body;
 
@@ -44,6 +45,11 @@ public class PaddleMovement : MonoBehaviour
     // Seems slightly better on my PC. Not sure if it is a major improvement.
     void FixedUpdate()
     {
+        if (playLoop.mode != PlayLoop.GameMode.Play)
+        {
+            return;
+        }
+
         input = MoveAction.ReadValue<Vector2>().x;
 
         Vector2 target = rigid_body.position;
@@ -51,5 +57,10 @@ public class PaddleMovement : MonoBehaviour
         target.x = Mathf.Clamp(target.x, left_boundary, right_boundary);
 
         rigid_body.MovePosition(target);
+    }
+
+    public void ResetPaddle(Vector2 startPosition)
+    {
+        rigid_body.position = startPosition;
     }
 }
