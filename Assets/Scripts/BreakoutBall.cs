@@ -9,6 +9,10 @@ public class BreakoutBall : MonoBehaviour
     private bool hasFallen = false;
     public float ballSpeed = 12f;
 
+    // half second hit cooldown
+    public float hitCooldown = 0.5f;
+    private float lastPaddleHitTime = -Mathf.Infinity;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -33,6 +37,9 @@ public class BreakoutBall : MonoBehaviour
         // FOR NOW - only react to the paddle
         if (collision.collider.CompareTag("Paddle"))
         {
+            if (Time.time - lastPaddleHitTime < hitCooldown) return;
+            lastPaddleHitTime = Time.time;
+
             // contact point 
             ContactPoint2D cp = collision.GetContact(0);
             Vector2 contactPoint = cp.point;     // world-space contact position

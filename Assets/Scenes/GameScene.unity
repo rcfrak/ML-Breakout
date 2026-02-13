@@ -408,6 +408,7 @@ GameObject:
   - component: {fileID: 407406597}
   - component: {fileID: 407406600}
   - component: {fileID: 407406601}
+  - component: {fileID: 407406602}
   m_Layer: 0
   m_Name: Paddle
   m_TagString: Paddle
@@ -516,8 +517,7 @@ MonoBehaviour:
       m_Action: Move
       m_Flags: 8
     m_Flags: 0
-  left_boundary: -7.85
-  right_boundary: 7.85
+  speed: 8
 --- !u!212 &407406598
 SpriteRenderer:
   serializedVersion: 2
@@ -599,7 +599,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407406596}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -645,7 +645,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407406596}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -691,6 +691,33 @@ PolygonCollider2D:
       - {x: 0.5, y: 0}
       - {x: 0.05, y: 0.5}
   m_UseDelaunayMesh: 1
+--- !u!50 &407406602
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407406596}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.0001
+  m_LinearDamping: 0
+  m_AngularDamping: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,11 +968,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f175c2686f377224c93d6d911af2905e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelGenerator
-
-  size: {x: 13, y: 6}
-
-  offset: {x: 1.15, y: 0.65}
+  size: {x: 13, y: 8}
   brickPrefab: {fileID: 4225461011210764721, guid: 562ec6409cb6bf74ba75ba3ad63c8c9d, type: 3}
+  cellSize: {x: 1.3, y: 0.42}
+  topPadding: 1
 --- !u!4 &754994935
 Transform:
   m_ObjectHideFlags: 0
@@ -1078,9 +1104,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &766022267
 CircleCollider2D:
@@ -1437,8 +1463,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3386d28be63427459d4b118294ce337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GamePlayLoop
-  breakoutBall: {fileID: 766022262}
-  levelGenerator: {fileID: 754994933}
   uiDocument: {fileID: 1511604868}
 --- !u!114 &1511604868
 MonoBehaviour:
