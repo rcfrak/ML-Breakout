@@ -24,6 +24,14 @@ public class BreakoutBall : MonoBehaviour
         Debug.Log($"Mode = {playLoop.mode}");
     }
 
+    void Start()
+    {
+        if (playLoop.mode == PlayLoop.GameMode.Training)
+        {
+            Launch();
+        }
+    }
+
     void Update()
     {
         // Check if in train or play mode.

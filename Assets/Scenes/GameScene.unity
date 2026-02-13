@@ -1469,6 +1469,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GamePlayLoop
   mode: 0
+  ball: {fileID: 766022268}
+  paddle: {fileID: 407406597}
+  levelGenerator: {fileID: 754994934}
   uiDocument: {fileID: 1511604868}
 --- !u!114 &1511604868
 MonoBehaviour:
@@ -1524,6 +1527,7 @@ MonoBehaviour:
   levelGenerator: {fileID: 754994933}
   sawLoss: 0
   sawWin: 0
+  EpisodeOver: 0
 --- !u!114 &1511604871
 MonoBehaviour:
   m_ObjectHideFlags: 0

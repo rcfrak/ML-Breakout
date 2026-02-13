@@ -17,9 +17,9 @@ public class PlayLoop : MonoBehaviour
         Training
     }
     public GameMode mode = GameMode.Play;
-    private BreakoutBall ball;
-    private PaddleMovement paddle;
-    private LevelGenerator levelGenerator;
+    public BreakoutBall ball;
+    public PaddleMovement paddle;
+    public LevelGenerator levelGenerator;
     private Observer observer;
     private Scorer scorer;
     private Button restartButton;
@@ -30,6 +30,9 @@ public class PlayLoop : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        paddlePosition = paddle.transform.position;
+        ballPosition = ball.transform.position;
+        
         if (mode == GameMode.Play)
         {
             restartButton = uiDocument.rootVisualElement.Q<Button>("RestartButton");
@@ -94,6 +97,7 @@ public class PlayLoop : MonoBehaviour
         levelGenerator.ResetLevel();
         paddle.ResetPaddle(paddlePosition);
         ball.ResetBall(ballPosition);
+        ball.Launch();
     }
 
     //Reload the scene by loading the scene with current scene name

@@ -22,7 +22,7 @@ public class Observer : MonoBehaviour
     // The number of bricks that have been broken thus far
     private int bricksBroken = 0;
 
-    public bool EpisodeOver => sawLoss || sawWin;
+    public bool EpisodeOver;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -39,10 +39,12 @@ public class Observer : MonoBehaviour
         if (!breakoutBall)
         {
             sawLoss = true;
+            EpisodeOver = true;
         }
-        else if (numBricks == 0)
+        else if (numBricks == 0 && initialBricks > 0)
         {
             sawWin = true;
+            EpisodeOver = true;
         }
 
     }
@@ -73,6 +75,7 @@ public class Observer : MonoBehaviour
     {
         sawLoss = false;
         sawWin = false;
+        EpisodeOver = false;
         numBricks = 0;
         initialBricks = 0;
         bricksBroken = 0;
