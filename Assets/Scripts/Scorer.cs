@@ -23,7 +23,7 @@ public class Scorer : MonoBehaviour
     void Update()
     {
         score = observer.getBricksBroken() * scoreMultiplier;
-        Debug.Log(getTotalScore());
+        //Debug.Log(getTotalScore());
     }
 
     public void writeWin()

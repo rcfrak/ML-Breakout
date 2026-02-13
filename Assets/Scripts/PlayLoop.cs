@@ -10,18 +10,44 @@ using UnityEngine.SceneManagement;
 
 public class PlayLoop : MonoBehaviour
 {
+    // Allow for switching functionality based on play or train mode.
+    public enum GameMode
+    {
+        Play,
+        Training
+    }
+    public GameMode mode = GameMode.Play;
+    public BreakoutBall ball;
+    public PaddleMovement paddle;
+    public LevelGenerator levelGenerator;
     private Observer observer;
     private Scorer scorer;
     private Button restartButton;
     public UIDocument uiDocument;
+    private Vector2 ballPosition;
+    private Vector2 paddlePosition;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        restartButton = uiDocument.rootVisualElement.Q<Button>("RestartButton");
-        restartButton.style.display = DisplayStyle.None;
-        //adds method to list of things done when the button is clicked
-        restartButton.clicked += ReloadScene;
+        paddlePosition = paddle.transform.position;
+        ballPosition = ball.transform.position;
+        
+        if (mode == GameMode.Play)
+        {
+            restartButton = uiDocument.rootVisualElement.Q<Button>("RestartButton");
+            restartButton.style.display = DisplayStyle.None;
+            //adds method to list of things done when the button is clicked
+            restartButton.clicked += ReloadScene;
+        }
+        // If game mode is not set to play, hide UI element.
+        else
+        {
+            if (uiDocument != null)
+            {
+                uiDocument.rootVisualElement.style.display = DisplayStyle.None;
+            }
+        }
 
         //link to observer and scorer objects in GameManager
         observer = GetComponent<Observer>();
@@ -31,15 +57,57 @@ public class PlayLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // This conditional is split to prepare for different win/loss UIs
+        // Check if episode is over
+        if (!observer.EpisodeOver)
+        {
+            return;
+        }
+        
+        if (mode == GameMode.Play)
+        {
+            // This conditional is split to prepare for different win/loss UIs
+            if (observer.sawWin)
+            {
+                restartButton.style.display = DisplayStyle.Flex;
+            }
+            else if (observer.sawLoss)
+            {
+                restartButton.style.display = DisplayStyle.Flex;
+            } 
+        }
+        // If in training mode, skip restart button and reset episode
+        else
+        {
+            ResetEpisode();
+        }
+    }
+
+    void ResetEpisode()
+    {
+        //tell the scorer to write data before reloading the scene
         if (observer.sawWin)
         {
-            restartButton.style.display = DisplayStyle.Flex;
+            scorer.writeWin();
         }
         else if (observer.sawLoss)
         {
-            restartButton.style.display = DisplayStyle.Flex;
-        } 
+            scorer.writeLoss();
+        }
+
+        // Reset for training episodes
+        observer.ResetObserver();
+        levelGenerator.ResetLevel();
+        paddle.ResetPaddle(paddlePosition);
+        ball.ResetBall(ballPosition);
+        ball.Launch();
+    }
+
+    // Training mode alternative to destroying the ball object on floor impact
+    // Reset rather than reload
+    public void TriggerLoss()
+    {
+        observer.sawLoss = true;
+        observer.EpisodeOver = true;
     }
 
     //Reload the scene by loading the scene with current scene name
