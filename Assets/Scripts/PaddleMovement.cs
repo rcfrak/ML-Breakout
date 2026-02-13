@@ -41,16 +41,18 @@ public class PaddleMovement : MonoBehaviour
         right_boundary = right_bounds.min.x - half_paddle;
     }
 
-    // Switched from Update in an attempt to smooth the physics and movement stuttering.
-    // Seems slightly better on my PC. Not sure if it is a major improvement.
     void FixedUpdate()
     {
-        if (playLoop.mode != PlayLoop.GameMode.Play)
+        // Check if human or agent have control and adjust input accordingly
+        if (playLoop.mode == PlayLoop.GameMode.Training)
         {
-            return;
+            //input = Mathf.Sin(Time.time * 2f); // Used to test ball loss reset in training
+            return; // Do not allow human control if set to Training
         }
-
-        input = MoveAction.ReadValue<Vector2>().x;
+        else if (playLoop.mode == PlayLoop.GameMode.Play)
+        {
+            input = MoveAction.ReadValue<Vector2>().x;
+        }
 
         Vector2 target = rigid_body.position;
         target.x += input * speed * Time.fixedDeltaTime;
@@ -59,6 +61,7 @@ public class PaddleMovement : MonoBehaviour
         rigid_body.MovePosition(target);
     }
 
+    // On episode reset, paddle returns to start position
     public void ResetPaddle(Vector2 startPosition)
     {
         rigid_body.position = startPosition;

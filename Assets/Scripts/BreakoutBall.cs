@@ -26,6 +26,7 @@ public class BreakoutBall : MonoBehaviour
 
     void Start()
     {
+        // Launches ball when human control is removed during training
         if (playLoop.mode == PlayLoop.GameMode.Training)
         {
             Launch();
@@ -48,7 +49,8 @@ public class BreakoutBall : MonoBehaviour
         }
     }
 
-    // Used for launching ball through human action in Update() or later agent control.
+    // Used for launching ball through human action in Update() or later agent control
+    // Currently auto launching at start and reset while in Training mode
     public void Launch()
     {
         rb.linearVelocity = Vector2.down * ballSpeed;   
@@ -79,9 +81,16 @@ public class BreakoutBall : MonoBehaviour
         }
         else if (collision.collider.CompareTag("Floor"))
         {
+            // Destroy ball and reload game in Play mode
             if (playLoop.mode == PlayLoop.GameMode.Play)
             {
                 Destroy(gameObject);
+            }
+            // Stop ball and trigger loss condition to reset in Training mode
+            else
+            {
+                rb.linearVelocity = Vector2.zero;
+                playLoop.TriggerLoss();
             }
         }
         else
@@ -89,7 +98,7 @@ public class BreakoutBall : MonoBehaviour
             return;
         }
     }
-
+    // On episode reset, ball returns to start position
     public void ResetBall(Vector2 startPosition)
     {
         rb.position = startPosition;

@@ -57,6 +57,7 @@ public class PlayLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Check if episode is over
         if (!observer.EpisodeOver)
         {
             return;
@@ -74,6 +75,7 @@ public class PlayLoop : MonoBehaviour
                 restartButton.style.display = DisplayStyle.Flex;
             } 
         }
+        // If in training mode, skip restart button and reset episode
         else
         {
             ResetEpisode();
@@ -92,12 +94,20 @@ public class PlayLoop : MonoBehaviour
             scorer.writeLoss();
         }
 
-        // Reset rather than reload for training episodes
+        // Reset for training episodes
         observer.ResetObserver();
         levelGenerator.ResetLevel();
         paddle.ResetPaddle(paddlePosition);
         ball.ResetBall(ballPosition);
         ball.Launch();
+    }
+
+    // Training mode alternative to destroying the ball object on floor impact
+    // Reset rather than reload
+    public void TriggerLoss()
+    {
+        observer.sawLoss = true;
+        observer.EpisodeOver = true;
     }
 
     //Reload the scene by loading the scene with current scene name
