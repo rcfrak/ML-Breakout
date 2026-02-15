@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class BreakoutBall : MonoBehaviour
 {
+    [SerializeField] private PlayLoop playLoop;
     private Rigidbody2D rb;
     private bool hasFallen = false;
     public float ballSpeed = 12f;
@@ -18,18 +19,42 @@ public class BreakoutBall : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;   // ensures ball does not fall at start
         rb.linearVelocity = Vector2.zero;   // ball starts still
+
+        // Check console to see current game mode
+        Debug.Log($"Mode = {playLoop.mode}");
+    }
+
+    void Start()
+    {
+        // Launches ball when human control is removed during training
+        if (playLoop.mode == PlayLoop.GameMode.Training)
+        {
+            Launch();
+        }
     }
 
     void Update()
     {
+        // Check if in train or play mode.
+        if (playLoop.mode != PlayLoop.GameMode.Play) 
+        {
+            return;
+        }
+
         // launch towards paddle only after player presses the space bar
         if (hasFallen) return;
         if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            rb.gravityScale = 0f;
-            rb.linearVelocity = Vector2.down * ballSpeed;   
-            hasFallen = true;
+            Launch();
         }
+    }
+
+    // Used for launching ball through human action in Update() or later agent control
+    // Currently auto launching at start and reset while in Training mode
+    public void Launch()
+    {
+        rb.linearVelocity = Vector2.down * ballSpeed;   
+        hasFallen = true;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -52,15 +77,33 @@ public class BreakoutBall : MonoBehaviour
             Vector2 newDirection = new Vector2(normalizedXOffset, 1f).normalized;
             rb.linearVelocity = newDirection * ballSpeed;
 
-            Debug.Log($"Hit paddle! XOffset: {normalizedXOffset}");
+            //Debug.Log($"Hit paddle! XOffset: {normalizedXOffset}");
         }
         else if (collision.collider.CompareTag("Floor"))
         {
-            Destroy(gameObject);
+            // Destroy ball and reload game in Play mode
+            if (playLoop.mode == PlayLoop.GameMode.Play)
+            {
+                Destroy(gameObject);
+            }
+            // Stop ball and trigger loss condition to reset in Training mode
+            else
+            {
+                rb.linearVelocity = Vector2.zero;
+                playLoop.TriggerLoss();
+            }
         }
         else
         {
             return;
         }
+    }
+    // On episode reset, ball returns to start position
+    public void ResetBall(Vector2 startPosition)
+    {
+        rb.position = startPosition;
+        rb.linearVelocity = Vector2.zero;
+        hasFallen = false;
+        lastPaddleHitTime = -Mathf.Infinity;
     }
 }
