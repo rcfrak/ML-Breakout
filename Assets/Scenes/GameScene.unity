@@ -428,6 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f6bafe053447346a63db02f1294800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PaddleMovement
+  playLoop: {fileID: 1511604867}
   MoveAction:
     m_Name: Move
     m_Type: 0
@@ -1156,7 +1157,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d088c8079e1d477a8e29a0cf657d8ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BreakoutBall
+  playLoop: {fileID: 1511604867}
   ballSpeed: 7
+  hitCooldown: 0.5
 --- !u!1 &1058467780
 GameObject:
   m_ObjectHideFlags: 0
@@ -1465,6 +1468,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3386d28be63427459d4b118294ce337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GamePlayLoop
+  mode: 0
+  ball: {fileID: 766022268}
+  paddle: {fileID: 407406597}
+  levelGenerator: {fileID: 754994934}
   uiDocument: {fileID: 1511604868}
 --- !u!114 &1511604868
 MonoBehaviour:
@@ -1520,6 +1527,7 @@ MonoBehaviour:
   levelGenerator: {fileID: 754994933}
   sawLoss: 0
   sawWin: 0
+  EpisodeOver: 0
 --- !u!114 &1511604871
 MonoBehaviour:
   m_ObjectHideFlags: 0

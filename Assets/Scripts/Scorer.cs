@@ -28,6 +28,7 @@ public class Scorer : MonoBehaviour
         Debug.Log($"Paddle hits: {paddleHitCount}");
         // Debug.Log($"Score: {getTotalScore()}");
         // Debug.Log($"Rounds Won: {ScoreStorage.Instance.getRoundsWon()}");
+        //Debug.Log(getTotalScore());
     }
 
     public void writeWin()
