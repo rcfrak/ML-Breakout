@@ -58,5 +58,11 @@ public class ScoreStorage : MonoBehaviour
     {
         return savedScore;
     }
+
+    // Returns the number of rounds won
+    public int getRoundsWon()
+    {
+        return roundsWon;
+    }
 }
 

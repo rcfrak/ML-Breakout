@@ -21,6 +21,7 @@ public class Observer : MonoBehaviour
     private int initialBricks = 0;
     // The number of bricks that have been broken thus far
     private int bricksBroken = 0;
+    public int paddleHitCount {get; private set;}
 
     public bool EpisodeOver;
 
@@ -28,6 +29,15 @@ public class Observer : MonoBehaviour
     void Start()
     {
         CountBricks();
+    }
+
+    private void OnEnable()
+    {
+        BreakoutBall.OnPaddleHit += HandlePaddleHit;
+    }
+    private void OnDisable()
+    {
+        BreakoutBall.OnPaddleHit -= HandlePaddleHit;
     }
 
     // Update is called once per frame
@@ -69,6 +79,19 @@ public class Observer : MonoBehaviour
     {
         return bricksBroken;
     }
+
+    // incremenet paddle hit count
+    private void HandlePaddleHit()
+    {
+        paddleHitCount++;
+    }
+
+    // returns paddle hit count. can be called outside
+    public int getPaddleHits()
+    {
+        return paddleHitCount;
+    }
+
 
     // For training mode reset after each episode.
     public void ResetObserver()

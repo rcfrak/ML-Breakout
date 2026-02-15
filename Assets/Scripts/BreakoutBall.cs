@@ -9,6 +9,7 @@ public class BreakoutBall : MonoBehaviour
     private Rigidbody2D rb;
     private bool hasFallen = false;
     public float ballSpeed = 12f;
+    public static System.Action OnPaddleHit;
 
     // half second hit cooldown
     public float hitCooldown = 0.5f;
@@ -62,6 +63,8 @@ public class BreakoutBall : MonoBehaviour
         // FOR NOW - only react to the paddle
         if (collision.collider.CompareTag("Paddle"))
         {
+            OnPaddleHit?.Invoke();
+
             if (Time.time - lastPaddleHitTime < hitCooldown) return;
             lastPaddleHitTime = Time.time;
 
@@ -76,8 +79,9 @@ public class BreakoutBall : MonoBehaviour
 
             Vector2 newDirection = new Vector2(normalizedXOffset, 1f).normalized;
             rb.linearVelocity = newDirection * ballSpeed;
+            // Debug.Log($"Hit paddle! XOffset: {normalizedXOffset}");
 
-            //Debug.Log($"Hit paddle! XOffset: {normalizedXOffset}");
+        
         }
         else if (collision.collider.CompareTag("Floor"))
         {

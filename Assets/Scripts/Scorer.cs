@@ -11,6 +11,7 @@ public class Scorer : MonoBehaviour
 
     public const int scoreMultiplier = 10;
     private int score = 0;
+    private int paddleHitCount = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,6 +24,10 @@ public class Scorer : MonoBehaviour
     void Update()
     {
         score = observer.getBricksBroken() * scoreMultiplier;
+        paddleHitCount = observer.getPaddleHits();
+        Debug.Log($"Paddle hits: {paddleHitCount}");
+        // Debug.Log($"Score: {getTotalScore()}");
+        // Debug.Log($"Rounds Won: {ScoreStorage.Instance.getRoundsWon()}");
         //Debug.Log(getTotalScore());
     }
 
@@ -42,5 +47,7 @@ public class Scorer : MonoBehaviour
     {
         return score + ScoreStorage.Instance.getSavedScore();
     }
+
+    
 
 }
