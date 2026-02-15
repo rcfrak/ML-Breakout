@@ -39,6 +39,7 @@ public class BreakoutBall : MonoBehaviour
         if (collision.collider.CompareTag("Paddle"))
         {
             OnPaddleHit?.Invoke();
+
             if (Time.time - lastPaddleHitTime < hitCooldown) return;
             lastPaddleHitTime = Time.time;
 
@@ -53,7 +54,6 @@ public class BreakoutBall : MonoBehaviour
 
             Vector2 newDirection = new Vector2(normalizedXOffset, 1f).normalized;
             rb.linearVelocity = newDirection * ballSpeed;
-
             // Debug.Log($"Hit paddle! XOffset: {normalizedXOffset}");
         }
         else if (collision.collider.CompareTag("Floor"))
