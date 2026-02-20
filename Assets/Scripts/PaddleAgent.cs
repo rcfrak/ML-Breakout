@@ -12,7 +12,7 @@ public class PaddleAgent : Agent
     [SerializeField] private InputActionReference moveAction;
 
     [Header("Movement")]
-    [SerializeField] private float speed = 12f;
+    [SerializeField] private float speed = 8f;
     [SerializeField] private float leftBoundary = -7.5f;
     [SerializeField] private float rightBoundary = 7.5f;
 
