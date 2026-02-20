@@ -25,7 +25,7 @@ public class Scorer : MonoBehaviour
     {
         score = observer.getBricksBroken() * scoreMultiplier;
         paddleHitCount = observer.getPaddleHits();
-        Debug.Log($"Paddle hits: {paddleHitCount}");
+        // Debug.Log($"Paddle hits: {paddleHitCount}");
         // Debug.Log($"Score: {getTotalScore()}");
         // Debug.Log($"Rounds Won: {ScoreStorage.Instance.getRoundsWon()}");
         //Debug.Log(getTotalScore());

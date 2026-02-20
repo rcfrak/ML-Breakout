@@ -53,13 +53,13 @@ public class PaddleAgent : Agent
     }
     public void ResetPaddle(Vector2 startPosition)
     {
-    Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
 
-    rb.position = startPosition;
-    rb.linearVelocity = Vector2.zero;
+        rb.position = startPosition;
+        rb.linearVelocity = Vector2.zero;
 
-    // clears agent input so it doesn't drift
-    inputX = 0f;
+        // clears agent input so it doesn't drift
+        inputX = 0f;
     }
 
     // ================= ML AGENT =================
@@ -87,6 +87,7 @@ public class PaddleAgent : Agent
             return;
 
         int action = actions.DiscreteActions[0];
+        // Debug.Log($"Action = {action}");
 
         inputX = 0f;
         if (action == 1) inputX = -1f;
