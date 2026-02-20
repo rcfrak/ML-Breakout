@@ -56,8 +56,6 @@ public class PaddleAgent : Agent
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
 
         rb.position = startPosition;
-        rb.linearVelocity = Vector2.zero;
-
         // clears agent input so it doesn't drift
         inputX = 0f;
     }
@@ -67,11 +65,13 @@ public class PaddleAgent : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(NormX(transform.position.x));
+        
 
         if (ballTransform != null)
         {
             sensor.AddObservation(NormX(ballTransform.position.x));
             sensor.AddObservation(ballTransform.position.y);
+            Debug.Log($"Paddle: {NormX(transform.position.x)} Ball: ({NormX(ballTransform.position.x)}, {ballTransform.position.y})");
         }
 
         if (ballRb != null)

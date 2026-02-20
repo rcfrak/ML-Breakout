@@ -639,8 +639,8 @@ MonoBehaviour:
   speed: 8
   leftBoundary: -7.5
   rightBoundary: 7.5
-  ballTransform: {fileID: 0}
-  ballRb: {fileID: 0}
+  ballTransform: {fileID: 766022264}
+  ballRb: {fileID: 766022265}
 --- !u!114 &407406604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -665,7 +665,7 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 1
+  m_BehaviorType: 0
   m_BehaviorName: My Behavior
   TeamId: 0
   m_UseChildSensors: 1
@@ -1436,7 +1436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3386d28be63427459d4b118294ce337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GamePlayLoop
-  mode: 1
+  mode: 0
   ball: {fileID: 766022268}
   paddle: {fileID: 407406603}
   levelGenerator: {fileID: 754994934}
