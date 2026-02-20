@@ -68,6 +68,11 @@ public class BreakoutBall : MonoBehaviour
             if (Time.time - lastPaddleHitTime < hitCooldown) return;
             lastPaddleHitTime = Time.time;
 
+            if (playLoop.mode == PlayLoop.GameMode.Training)
+            {
+                playLoop.paddle.AddReward(0.1f);
+            }
+
             // contact point 
             ContactPoint2D cp = collision.GetContact(0);
             Vector2 contactPoint = cp.point;     // world-space contact position
@@ -94,6 +99,7 @@ public class BreakoutBall : MonoBehaviour
             else
             {
                 rb.linearVelocity = Vector2.zero;
+                playLoop.paddle.AddReward(-1f);
                 playLoop.TriggerLoss();
             }
         }
