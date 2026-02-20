@@ -18,7 +18,8 @@ public class PlayLoop : MonoBehaviour
     }
     public GameMode mode = GameMode.Play;
     public BreakoutBall ball;
-    public PaddleMovement paddle;
+    //public PaddleMovement paddle;
+    public PaddleAgent paddle;
     public LevelGenerator levelGenerator;
     private Observer observer;
     private Scorer scorer;
@@ -93,6 +94,7 @@ public class PlayLoop : MonoBehaviour
         {
             scorer.writeLoss();
         }
+        paddle.EndEpisode();
 
         // Reset for training episodes
         observer.ResetObserver();
