@@ -25,19 +25,29 @@ public class Observer : MonoBehaviour
 
     public bool EpisodeOver;
 
+    private PlayLoop playLoop;
+    private PaddleAgent paddleAgent;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         CountBricks();
+        playLoop = GetComponent<PlayLoop>();
+        paddleAgent = playLoop.paddle;
     }
 
     private void OnEnable()
     {
         BreakoutBall.OnPaddleHit += HandlePaddleHit;
+        BreakoutBall.OnBallLost += HandleBallLost;
+        Brick.OnBrickDestroyed += HandleBrickDestroyed;
+
     }
     private void OnDisable()
     {
         BreakoutBall.OnPaddleHit -= HandlePaddleHit;
+        BreakoutBall.OnBallLost -= HandleBallLost;
+        Brick.OnBrickDestroyed -= HandleBrickDestroyed;
     }
 
     // Update is called once per frame
@@ -55,6 +65,10 @@ public class Observer : MonoBehaviour
         {
             sawWin = true;
             EpisodeOver = true;
+
+            // ======== Reward for winning ++++++++++
+            if (playLoop.mode == PlayLoop.GameMode.Training && paddleAgent != null)
+                paddleAgent.AddReward(1.0f);
         }
 
     }
@@ -74,23 +88,40 @@ public class Observer : MonoBehaviour
         }
     }
 
-    // This function can be used to calculate a score
+    //This function can be used to calculate a score
     public int getBricksBroken()
     {
         return bricksBroken;
     }
 
-    // incremenet paddle hit count
-    private void HandlePaddleHit()
-    {
-        paddleHitCount++;
-    }
 
     // returns paddle hit count. can be called outside
     public int getPaddleHits()
     {
         return paddleHitCount;
     }
+
+    // ++++++++++++++   REWARDS   +++++++++++++++++++++++
+
+    private void HandlePaddleHit()
+    {
+        paddleHitCount++;
+        if (playLoop.mode == PlayLoop.GameMode.Training && paddleAgent != null)
+            paddleAgent.AddReward(0.05f); // PADDLE HIT REWARD
+    }
+
+    private void HandleBallLost()
+    {
+        if (playLoop.mode == PlayLoop.GameMode.Training && paddleAgent != null)
+            paddleAgent.AddReward(-1.0f); // LOSS PENALTY
+    }
+
+    private void HandleBrickDestroyed()
+    {
+        if (playLoop.mode == PlayLoop.GameMode.Training && paddleAgent != null)
+            paddleAgent.AddReward(0.3f); // BRICK REWARD
+    }
+
 
 
     // For training mode reset after each episode.
@@ -102,5 +133,6 @@ public class Observer : MonoBehaviour
         numBricks = 0;
         initialBricks = 0;
         bricksBroken = 0;
+        paddleHitCount = 0;
     }
 }

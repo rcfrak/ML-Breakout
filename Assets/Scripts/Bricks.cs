@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Brick : MonoBehaviour
 {
+    public static System.Action OnBrickDestroyed;
+
     private SpriteRenderer _renderer;
     private bool _isDestroying = false;
 
@@ -16,6 +18,7 @@ public class Brick : MonoBehaviour
         if (_isDestroying) 
             return;
         _isDestroying = true;
+        OnBrickDestroyed?.Invoke(); // used for brick breaking rewards.
 
         // Transform to white
         _renderer.color = Color.white;

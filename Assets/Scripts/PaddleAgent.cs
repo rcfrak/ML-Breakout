@@ -23,6 +23,7 @@ public class PaddleAgent : Agent
     private Rigidbody2D rb;
     private float inputX;
 
+
     public override void Initialize()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -60,6 +61,7 @@ public class PaddleAgent : Agent
         inputX = 0f;
     }
 
+
     // ================= ML AGENT =================
 
     public override void CollectObservations(VectorSensor sensor)
@@ -85,6 +87,9 @@ public class PaddleAgent : Agent
     {
         if (playLoop.mode != PlayLoop.GameMode.Training)
             return;
+
+        // ==== Step Disencentive Penalty ====
+        AddReward(-0.001f);
 
         int action = actions.DiscreteActions[0];
         // Debug.Log($"Action = {action}");
