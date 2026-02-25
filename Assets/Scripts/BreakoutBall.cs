@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.MLAgents;
 
 [RequireComponent(typeof(Rigidbody2D))]
 
@@ -10,6 +11,7 @@ public class BreakoutBall : MonoBehaviour
     private bool hasFallen = false;
     public float ballSpeed = 12f;
     public static System.Action OnPaddleHit;
+    public static System.Action OnBallLost;
 
     // half second hit cooldown
     public float hitCooldown = 0.5f;
@@ -20,6 +22,8 @@ public class BreakoutBall : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;   // ensures ball does not fall at start
         rb.linearVelocity = Vector2.zero;   // ball starts still
+
+        ballSpeed = Academy.Instance.EnvironmentParameters.GetWithDefault("ball_speed", ballSpeed);
 
         // Check console to see current game mode
         Debug.Log($"Mode = {playLoop.mode}");
@@ -68,6 +72,7 @@ public class BreakoutBall : MonoBehaviour
             if (Time.time - lastPaddleHitTime < hitCooldown) return;
             lastPaddleHitTime = Time.time;
 
+
             // contact point 
             ContactPoint2D cp = collision.GetContact(0);
             Vector2 contactPoint = cp.point;     // world-space contact position
@@ -94,6 +99,7 @@ public class BreakoutBall : MonoBehaviour
             else
             {
                 rb.linearVelocity = Vector2.zero;
+                OnBallLost?.Invoke();
                 playLoop.TriggerLoss();
             }
         }

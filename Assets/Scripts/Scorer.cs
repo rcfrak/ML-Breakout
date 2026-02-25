@@ -3,6 +3,7 @@
  * at the end of a round (win or loss), and get a cumulative score
  */
 
+using System.Diagnostics;
 using UnityEngine;
 
 public class Scorer : MonoBehaviour
@@ -25,10 +26,11 @@ public class Scorer : MonoBehaviour
     {
         score = observer.getBricksBroken() * scoreMultiplier;
         paddleHitCount = observer.getPaddleHits();
-        Debug.Log($"Paddle hits: {paddleHitCount}");
+        // Debug.Log($"Paddle hits: {paddleHitCount}");
         // Debug.Log($"Score: {getTotalScore()}");
         // Debug.Log($"Rounds Won: {ScoreStorage.Instance.getRoundsWon()}");
         //Debug.Log(getTotalScore());
+        //Debug.Log($"Cumulative Reward: {GetCumulativeReward()}");
     }
 
     public void writeWin()
