@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.MLAgents;
 
 [RequireComponent(typeof(Rigidbody2D))]
 
@@ -9,9 +8,8 @@ public class BreakoutBall : MonoBehaviour
     [SerializeField] private PlayLoop playLoop;
     private Rigidbody2D rb;
     private bool hasFallen = false;
-    public float ballSpeed = 12f;
+    public float ballSpeed = 8f;
     public static System.Action OnPaddleHit;
-    public static System.Action OnBallLost;
 
     // half second hit cooldown
     public float hitCooldown = 0.5f;
@@ -23,10 +21,8 @@ public class BreakoutBall : MonoBehaviour
         rb.gravityScale = 0f;   // ensures ball does not fall at start
         rb.linearVelocity = Vector2.zero;   // ball starts still
 
-        ballSpeed = Academy.Instance.EnvironmentParameters.GetWithDefault("ball_speed", ballSpeed);
-
         // Check console to see current game mode
-        Debug.Log($"Mode = {playLoop.mode}");
+        //Debug.Log($"Mode = {playLoop.mode}");
     }
 
     void Start()
@@ -72,6 +68,11 @@ public class BreakoutBall : MonoBehaviour
             if (Time.time - lastPaddleHitTime < hitCooldown) return;
             lastPaddleHitTime = Time.time;
 
+            // Reward for hitting paddle
+            if (playLoop.mode == PlayLoop.GameMode.Training)
+            {
+                playLoop.paddle.AddReward(0.2f);
+            }
 
             // contact point 
             ContactPoint2D cp = collision.GetContact(0);
@@ -95,12 +96,21 @@ public class BreakoutBall : MonoBehaviour
             {
                 Destroy(gameObject);
             }
-            // Stop ball and trigger loss condition to reset in Training mode
+            // Stop ball, apply penalty, end agent episode, trigger loss condition to reset in Training mode
             else
             {
                 rb.linearVelocity = Vector2.zero;
-                OnBallLost?.Invoke();
+                playLoop.paddle.AddReward(-1f);
+                playLoop.paddle.EndEpisode();
                 playLoop.TriggerLoss();
+            }
+        }
+        else if (collision.collider.CompareTag("Brick"))
+        {
+            // Reward for destroying brick
+            if (playLoop.mode == PlayLoop.GameMode.Training)
+            {
+                playLoop.paddle.AddReward(0.3f);
             }
         }
         else

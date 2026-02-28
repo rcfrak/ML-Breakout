@@ -1,0 +1,65 @@
+{
+    "PaddleBehavior": {
+        "checkpoints": [
+            {
+                "steps": 499007,
+                "file_path": "results\\run3\\PaddleBehavior\\PaddleBehavior-499007.onnx",
+                "reward": null,
+                "creation_time": 1772227602.0511744,
+                "auxillary_file_paths": [
+                    "results\\run3\\PaddleBehavior\\PaddleBehavior-499007.pt"
+                ]
+            },
+            {
+                "steps": 998207,
+                "file_path": "results\\run3\\PaddleBehavior\\PaddleBehavior-998207.onnx",
+                "reward": null,
+                "creation_time": 1772230431.8544502,
+                "auxillary_file_paths": [
+                    "results\\run3\\PaddleBehavior\\PaddleBehavior-998207.pt"
+                ]
+            },
+            {
+                "steps": 1498962,
+                "file_path": "results\\run3\\PaddleBehavior\\PaddleBehavior-1498962.onnx",
+                "reward": null,
+                "creation_time": 1772233269.2200725,
+                "auxillary_file_paths": [
+                    "results\\run3\\PaddleBehavior\\PaddleBehavior-1498962.pt"
+                ]
+            },
+            {
+                "steps": 1999819,
+                "file_path": "results\\run3\\PaddleBehavior\\PaddleBehavior-1999819.onnx",
+                "reward": null,
+                "creation_time": 1772236106.133209,
+                "auxillary_file_paths": [
+                    "results\\run3\\PaddleBehavior\\PaddleBehavior-1999819.pt"
+                ]
+            },
+            {
+                "steps": 2001947,
+                "file_path": "results\\run3\\PaddleBehavior\\PaddleBehavior-2001947.onnx",
+                "reward": null,
+                "creation_time": 1772236106.2875733,
+                "auxillary_file_paths": [
+                    "results\\run3\\PaddleBehavior\\PaddleBehavior-2001947.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2001947,
+            "file_path": "results\\run3\\PaddleBehavior.onnx",
+            "reward": null,
+            "creation_time": 1772236106.2875733,
+            "auxillary_file_paths": [
+                "results\\run3\\PaddleBehavior\\PaddleBehavior-2001947.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.2.0.dev0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

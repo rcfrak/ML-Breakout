@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PaddleAgent : Agent
@@ -15,6 +16,8 @@ public class PaddleAgent : Agent
     [SerializeField] private float speed = 8f;
     [SerializeField] private float leftBoundary = -7.5f;
     [SerializeField] private float rightBoundary = 7.5f;
+    [SerializeField] private float topBoundary = 9.5f;
+    [SerializeField] private float bottomBoundary = -9.5f;
 
     [Header("Ball (Observations)")]
     [SerializeField] private Transform ballTransform;
@@ -40,8 +43,17 @@ public class PaddleAgent : Agent
             inputX = moveAction.action.ReadValue<Vector2>().x;
         }
         // TRAINING: inputX already set by Agent
-
         MovePaddle();
+
+        // Reward for being close to the ball
+        // Attempting to help track better
+        float disX = Mathf.Abs(transform.position.x - ballTransform.position.x);
+        float proxReward = Mathf.Clamp01(1f - disX / (rightBoundary - leftBoundary));
+
+        AddReward(0.005f * proxReward);
+
+        //Reward to move more since paddle started to sit in the middle
+        AddReward(0.001f);
     }
 
     void MovePaddle()
@@ -66,20 +78,25 @@ public class PaddleAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
+        // Obersation of paddle position
         sensor.AddObservation(NormX(transform.position.x));
         
 
         if (ballTransform != null)
         {
+            // Observations of the ball X and Y position, as well as direction relative to paddle
             sensor.AddObservation(NormX(ballTransform.position.x));
-            sensor.AddObservation(ballTransform.position.y);
-            Debug.Log($"Paddle: {NormX(transform.position.x)} Ball: ({NormX(ballTransform.position.x)}, {ballTransform.position.y})");
+            sensor.AddObservation(NormY(ballTransform.position.y));
+            sensor.AddObservation(NormX(ballTransform.position.x) - NormX(transform.position.x));
+            //Debug.Log($"Paddle: {NormX(transform.position.x)} Ball: ({NormX(ballTransform.position.x)}, {ballTransform.position.y})");
         }
 
         if (ballRb != null)
         {
-            sensor.AddObservation(ballRb.linearVelocity.x);
-            sensor.AddObservation(ballRb.linearVelocity.y);
+            // Observation of ball velocity
+            Vector2 v = ballRb.linearVelocity.normalized;
+            sensor.AddObservation(v.x);
+            sensor.AddObservation(v.y);
         }
     }
 
@@ -88,15 +105,20 @@ public class PaddleAgent : Agent
         if (playLoop.mode != PlayLoop.GameMode.Training)
             return;
 
-        // ==== Step Disencentive Penalty ====
-        AddReward(-0.001f);
-
         int action = actions.DiscreteActions[0];
         // Debug.Log($"Action = {action}");
 
         inputX = 0f;
         if (action == 1) inputX = -1f;
         if (action == 2) inputX = 1f;
+    }
+
+    // Using OnEpisodeBegin for clean reset 
+    public override void OnEpisodeBegin()
+    {
+        ResetPaddle(playLoop.paddlePosition);
+        playLoop.ball.ResetBall(playLoop.ballPosition);
+        playLoop.ball.Launch();
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -111,5 +133,9 @@ public class PaddleAgent : Agent
     float NormX(float x)
     {
         return Mathf.InverseLerp(leftBoundary, rightBoundary, x) * 2f - 1f;
+    }
+    float NormY(float y)
+    {
+        return Mathf.InverseLerp(bottomBoundary, topBoundary, y) * 2f - 1f;
     }
 }
