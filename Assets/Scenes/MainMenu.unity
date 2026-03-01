@@ -3393,6 +3393,7 @@ GameObject:
   - component: {fileID: 1579407704}
   - component: {fileID: 1579407703}
   - component: {fileID: 1579407702}
+  - component: {fileID: 1579407705}
   m_Layer: 5
   m_Name: SplitButton
   m_TagString: Untagged
@@ -3502,6 +3503,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1579407700}
   m_CullTransparentMesh: 1
+--- !u!114 &1579407705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1579407700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b42bfead5ba5a0542922d4e9664d23b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NavigationButton
+  button: {fileID: 1579407702}
+  targetCanvas: {fileID: 2135650717}
+  thisCanvas: {fileID: 1591093914}
 --- !u!1 &1591093911
 GameObject:
   m_ObjectHideFlags: 0
@@ -4456,7 +4472,7 @@ GameObject:
   - component: {fileID: 1834764803}
   - component: {fileID: 1834764802}
   - component: {fileID: 1834764801}
-  - component: {fileID: 1834764804}
+  - component: {fileID: 1834764805}
   m_Layer: 5
   m_Name: SoloButton
   m_TagString: Untagged
@@ -4566,7 +4582,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834764799}
   m_CullTransparentMesh: 1
---- !u!114 &1834764804
+--- !u!114 &1834764805
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4579,8 +4595,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoloButton
   button: {fileID: 1834764801}
-  soloCanvas: {fileID: 1277724730}
-  mainMenuCanvas: {fileID: 1591093914}
+  targetCanvas: {fileID: 1277724730}
+  thisCanvas: {fileID: 1591093914}
 --- !u!1 &1864698282
 GameObject:
   m_ObjectHideFlags: 0
@@ -5069,6 +5085,7 @@ GameObject:
   - component: {fileID: 1943414921}
   - component: {fileID: 1943414920}
   - component: {fileID: 1943414919}
+  - component: {fileID: 1943414922}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -5178,6 +5195,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1943414917}
   m_CullTransparentMesh: 1
+--- !u!114 &1943414922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943414917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b42bfead5ba5a0542922d4e9664d23b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NavigationButton
+  button: {fileID: 1943414919}
+  targetCanvas: {fileID: 1591093914}
+  thisCanvas: {fileID: 2135650717}
 --- !u!1 &1962438303
 GameObject:
   m_ObjectHideFlags: 0
@@ -5510,6 +5542,7 @@ GameObject:
   - component: {fileID: 2053728603}
   - component: {fileID: 2053728602}
   - component: {fileID: 2053728601}
+  - component: {fileID: 2053728604}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -5619,6 +5652,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2053728599}
   m_CullTransparentMesh: 1
+--- !u!114 &2053728604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053728599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b42bfead5ba5a0542922d4e9664d23b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NavigationButton
+  button: {fileID: 2053728601}
+  targetCanvas: {fileID: 1591093914}
+  thisCanvas: {fileID: 1277724730}
 --- !u!1 &2128673074
 GameObject:
   m_ObjectHideFlags: 0
