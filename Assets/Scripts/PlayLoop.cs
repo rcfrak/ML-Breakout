@@ -25,8 +25,8 @@ public class PlayLoop : MonoBehaviour
     private Scorer scorer;
     private Button restartButton;
     public UIDocument uiDocument;
-    private Vector2 ballPosition;
-    private Vector2 paddlePosition;
+    public Vector2 ballPosition;
+    public Vector2 paddlePosition;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
