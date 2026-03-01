@@ -113,13 +113,6 @@ public class PaddleAgent : Agent
         if (action == 2) inputX = 1f;
     }
 
-    // Using OnEpisodeBegin for clean reset 
-    public override void OnEpisodeBegin()
-    {
-        ResetPaddle(playLoop.paddlePosition);
-        playLoop.ball.ResetBall(playLoop.ballPosition);
-        playLoop.ball.Launch();
-    }
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
