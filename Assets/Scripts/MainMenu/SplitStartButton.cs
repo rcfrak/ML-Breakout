@@ -32,7 +32,7 @@ public class SplitStartButton : MonoBehaviour
         GameConfig.Instance.setPlayer(1, selection1);
         GameConfig.Instance.setPlayer(2, selection2);
 
-        //Load the game scene (THIS SHOULD BE UPDATED WHEN THE SECOND SCENE IS CREATED)
-        SceneManager.LoadScene("GameScene");
+        //Load the game scene
+        SceneManager.LoadScene("SplitScreen");
     }
 }

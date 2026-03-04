@@ -102,8 +102,10 @@ public class PaddleAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        if (playLoop.mode != PlayLoop.GameMode.Training)
+        if (playLoop.mode != PlayLoop.GameMode.Training && playLoop.mode != PlayLoop.GameMode.Inference)
+        {
             return;
+        }
 
         int action = actions.DiscreteActions[0];
         // Debug.Log($"Action = {action}");

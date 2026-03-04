@@ -28,7 +28,7 @@ public class BreakoutBall : MonoBehaviour
     void Start()
     {
         // Launches ball when human control is removed during training
-        if (playLoop.mode == PlayLoop.GameMode.Training)
+        if (playLoop.mode == PlayLoop.GameMode.Training || playLoop.mode == PlayLoop.GameMode.Inference)
         {
             Launch();
         }
@@ -97,11 +97,16 @@ public class BreakoutBall : MonoBehaviour
                 Destroy(gameObject);
             }
             // Stop ball, apply penalty, end agent episode, trigger loss condition to reset in Training mode
-            else
+            else if (playLoop.mode == PlayLoop.GameMode.Training)
             {
                 rb.linearVelocity = Vector2.zero;
                 playLoop.paddle.AddReward(-1f);
                 playLoop.paddle.EndEpisode();
+                playLoop.TriggerLoss();
+            }
+            else if (playLoop.mode == PlayLoop.GameMode.Inference)
+            {
+                rb.linearVelocity = Vector2.zero;
                 playLoop.TriggerLoss();
             }
         }

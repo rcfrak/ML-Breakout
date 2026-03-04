@@ -14,7 +14,8 @@ public class PlayLoop : MonoBehaviour
     public enum GameMode
     {
         Play,
-        Training
+        Training,
+        Inference
     }
     public GameMode mode = GameMode.Play;
     public BreakoutBall ball;
@@ -77,10 +78,23 @@ public class PlayLoop : MonoBehaviour
             } 
         }
         // If in training mode, skip restart button and reset episode
-        else
+        else if (mode == GameMode.Training)
         {
             ResetEpisode();
         }
+        else if (mode == GameMode.Inference)
+        {
+            ResetInference();
+        }
+    }
+
+    void ResetInference()
+    {
+        observer.ResetObserver();
+        levelGenerator.ResetLevel();
+        paddle.ResetPaddle(paddlePosition);
+        ball.ResetBall(ballPosition);
+        ball.Launch();
     }
 
     void ResetEpisode()
