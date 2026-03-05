@@ -12,6 +12,9 @@ public class LevelGenerator : MonoBehaviour
     public Vector2 cellSize = new Vector2(1.3f, 0.42f);  // spacing between bricks. brick is 1.25 width and 0.40 height
     public float topPadding = 1.0f;                      // space reserved for UI at top
 
+    [SerializeField] private Camera levelCamera;
+    [SerializeField] private Transform topCeiling;
+
     private Color[] rowColors = new Color[]
     {
         Color.hotPink,
@@ -32,10 +35,9 @@ public class LevelGenerator : MonoBehaviour
 
     void GenerateLevel()
     {
-        Camera cam = Camera.main;
-        float camTop = cam.transform.position.y + cam.orthographicSize;
-        float topY = camTop - topPadding;
+        float topY = topCeiling.position.y - topPadding;
         float gridWidth = (size.x - 1) * cellSize.x;
+        float screenCenter = transform.position.x;
 
         for (int i = 0; i < size.x; i++) // Columns/X-axis
         {
@@ -43,7 +45,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 GameObject newBrick = Instantiate(brickPrefab, transform);
 
-                float x = 0 - (gridWidth * 0.5f) + i * cellSize.x;
+                float x = screenCenter - (gridWidth * 0.5f) + i * cellSize.x;
                 float y = topY - j * cellSize.y; // goes downward from the top
                 newBrick.transform.position = new Vector3(x, y, 0f);
 
