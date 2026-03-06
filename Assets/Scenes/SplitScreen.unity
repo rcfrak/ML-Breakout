@@ -895,13 +895,18 @@ MonoBehaviour:
   MaxStep: 0
   playLoop: {fileID: 1278510865}
   moveAction: {fileID: 1130408079}
+  breakoutBall: {fileID: 80147943}
   speed: 8
   leftBoundary: -16.85
   rightBoundary: -1.15
   topBoundary: 9.5
   bottomBoundary: -9.5
+  playerIndex: 2
   ballTransform: {fileID: 80147946}
   ballRb: {fileID: 80147942}
+  model1: {fileID: 5022602860645237092, guid: 76db07a67eac30a4192a70af536ed420, type: 3}
+  model2: {fileID: 5022602860645237092, guid: 7d7cb3b942bafa04c8fb1fb23880e301, type: 3}
+  model3: {fileID: 5022602860645237092, guid: e215419caa8db974699d1862ad75e40a, type: 3}
 --- !u!114 &551092891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1855,6 +1860,7 @@ MonoBehaviour:
   uiDocument: {fileID: 1278510866}
   ballPosition: {x: 0, y: 0}
   paddlePosition: {x: 0, y: 0}
+  screen: 0
 --- !u!114 &1278510866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2099,6 +2105,7 @@ MonoBehaviour:
   uiDocument: {fileID: 1450127867}
   ballPosition: {x: 0, y: 0}
   paddlePosition: {x: 0, y: 0}
+  screen: 1
 --- !u!114 &1450127867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2410,13 +2417,18 @@ MonoBehaviour:
   MaxStep: 0
   playLoop: {fileID: 1450127866}
   moveAction: {fileID: 0}
+  breakoutBall: {fileID: 910279865}
   speed: 8
   leftBoundary: 1.15
   rightBoundary: 16.85
   topBoundary: 9.5
   bottomBoundary: -9.5
+  playerIndex: 2
   ballTransform: {fileID: 910279868}
   ballRb: {fileID: 910279864}
+  model1: {fileID: 5022602860645237092, guid: 76db07a67eac30a4192a70af536ed420, type: 3}
+  model2: {fileID: 5022602860645237092, guid: 7d7cb3b942bafa04c8fb1fb23880e301, type: 3}
+  model3: {fileID: 5022602860645237092, guid: e215419caa8db974699d1862ad75e40a, type: 3}
 --- !u!114 &1663152388
 MonoBehaviour:
   m_ObjectHideFlags: 0

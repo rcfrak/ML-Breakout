@@ -636,13 +636,18 @@ MonoBehaviour:
   MaxStep: 0
   playLoop: {fileID: 1511604867}
   moveAction: {fileID: 2124702537}
+  breakoutBall: {fileID: 766022268}
   speed: 8
   leftBoundary: -7.5
   rightBoundary: 7.5
   topBoundary: 9.5
   bottomBoundary: -9.5
+  playerIndex: 2
   ballTransform: {fileID: 766022264}
   ballRb: {fileID: 766022265}
+  model1: {fileID: 5022602860645237092, guid: 76db07a67eac30a4192a70af536ed420, type: 3}
+  model2: {fileID: 5022602860645237092, guid: 7d7cb3b942bafa04c8fb1fb23880e301, type: 3}
+  model3: {fileID: 5022602860645237092, guid: e215419caa8db974699d1862ad75e40a, type: 3}
 --- !u!114 &407406604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1447,6 +1452,7 @@ MonoBehaviour:
   uiDocument: {fileID: 1511604868}
   ballPosition: {x: 0, y: 0}
   paddlePosition: {x: 0, y: 0}
+  screen: 0
 --- !u!114 &1511604868
 MonoBehaviour:
   m_ObjectHideFlags: 0

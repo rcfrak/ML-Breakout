@@ -32,33 +32,44 @@ public class GameConfig : MonoBehaviour
         }
     }
 
-    private string Player1 = "";
-    private string Player2 = "";
+    private string player1 = "";
+    private string player2 = "";
+    private string difficulty = "";
 
     public void setPlayer(int playerNum, string input)
     {
         if (playerNum == 1)
         {
-            Player1 = input;
-            UnityEngine.Debug.Log("Player 1 is " + input);
+            player1 = input;
+            //UnityEngine.Debug.Log("Player 1 is " + input);
         }
         else if (playerNum == 2)
         {
-            Player2 = input;
-            UnityEngine.Debug.Log("Player 2 is " + input);
+            player2 = input;
+            //UnityEngine.Debug.Log("Player 2 is " + input);
         }
         else
         {
             UnityEngine.Debug.Log("invalid call to setPlayer(), player num can only be 1 or 2");
         }
     }
+    public void setDifficulty(string input)
+    {
+        difficulty = input;
+    }
 
     public string getPlayer(int playerNum)
     {
-        if (playerNum == 1) return Player1;
-        if (playerNum == 2) return Player2;
+        if (playerNum == 1) return player1;
+        if (playerNum == 2) return player2;
         UnityEngine.Debug.Log("invalid call to getPlayer(), player num can only be 1 or 2");
         return "";
     }
+
+    public string getDifficulty()
+    {
+        return difficulty;
+    }
+
 }
 
