@@ -9,7 +9,8 @@
  * do not add it to a game scene.
  */
 
-using System.Runtime.CompilerServices;
+using System.Diagnostics;
+//using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class GameConfig : MonoBehaviour
@@ -39,17 +40,25 @@ public class GameConfig : MonoBehaviour
         if (playerNum == 1)
         {
             Player1 = input;
-            Debug.Log("Player 1 is " + input);
+            UnityEngine.Debug.Log("Player 1 is " + input);
         }
         else if (playerNum == 2)
         {
             Player2 = input;
-            Debug.Log("Player 2 is " + input);
+            UnityEngine.Debug.Log("Player 2 is " + input);
         }
         else
         {
-            Debug.Log("invalid call to setPlayer(), player num can only be 1 or 2");
+            UnityEngine.Debug.Log("invalid call to setPlayer(), player num can only be 1 or 2");
         }
+    }
+
+    public string getPlayer(int playerNum)
+    {
+        if (playerNum == 1) return Player1;
+        if (playerNum == 2) return Player2;
+        UnityEngine.Debug.Log("invalid call to getPlayer(), player num can only be 1 or 2");
+        return "";
     }
 }
 
