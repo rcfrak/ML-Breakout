@@ -38,7 +38,7 @@ public class PlayLoop : MonoBehaviour
     private string player;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         if (screen == Screen.Left)
         {
