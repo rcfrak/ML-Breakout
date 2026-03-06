@@ -895,11 +895,13 @@ MonoBehaviour:
   MaxStep: 0
   playLoop: {fileID: 1278510865}
   moveAction: {fileID: 1130408079}
+  breakoutBall: {fileID: 80147943}
   speed: 8
   leftBoundary: -16.85
   rightBoundary: -1.15
   topBoundary: 9.5
   bottomBoundary: -9.5
+  playerIndex: 2
   ballTransform: {fileID: 80147946}
   ballRb: {fileID: 80147942}
 --- !u!114 &551092891
@@ -2410,11 +2412,13 @@ MonoBehaviour:
   MaxStep: 0
   playLoop: {fileID: 1450127866}
   moveAction: {fileID: 0}
+  breakoutBall: {fileID: 910279865}
   speed: 8
   leftBoundary: 1.15
   rightBoundary: 16.85
   topBoundary: 9.5
   bottomBoundary: -9.5
+  playerIndex: 2
   ballTransform: {fileID: 910279868}
   ballRb: {fileID: 910279864}
 --- !u!114 &1663152388
