@@ -47,7 +47,7 @@ public class PaddleAgent : Agent
 
     private void ApplyDifficulty()
     {
-        string difficulty = GameConfig.Instance.getPlayer(playerIndex);
+        string difficulty = GameConfig.Instance.getDifficulty();
 
         int diffIndex = difficulty switch
         {
