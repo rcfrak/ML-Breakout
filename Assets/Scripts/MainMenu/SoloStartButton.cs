@@ -7,7 +7,8 @@ public class SoloStartButton : MonoBehaviour
 {
     public Button button;
     public TMP_Dropdown dropdown;
-    
+    public TMP_Dropdown diffDropdown;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,9 +25,12 @@ public class SoloStartButton : MonoBehaviour
         //Read the dropdowns
         int index = dropdown.value;
         string selection = dropdown.options[index].text;
+        int diffIndex = diffDropdown.value;
+        string difficulty = diffDropdown.options[diffIndex].text;
 
         //Report to the configuration mananger
         GameConfig.Instance.setPlayer(1, selection);
+        GameConfig.Instance.setDifficulty(difficulty);
 
         //Load the game scene
         SceneManager.LoadScene("GameScene");
