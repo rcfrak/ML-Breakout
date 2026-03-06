@@ -28,10 +28,36 @@ public class PlayLoop : MonoBehaviour
     public UIDocument uiDocument;
     public Vector2 ballPosition;
     public Vector2 paddlePosition;
+    
+    public enum Screen
+    {
+        Left,
+        Right
+    }
+    public Screen screen;
+    private string player;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (screen == Screen.Left)
+        {
+            player = GameConfig.Instance.getPlayer(1);
+        }
+        else if (screen == Screen.Right)
+        {
+            player = GameConfig.Instance.getPlayer(2);
+        }
+
+        if (player == "Player") {
+            mode = GameMode.Play;
+        }
+        else
+        {
+            mode = GameMode.Inference;
+            paddle.loadModel(player);
+        }
+
         paddlePosition = paddle.transform.position;
         ballPosition = ball.transform.position;
         

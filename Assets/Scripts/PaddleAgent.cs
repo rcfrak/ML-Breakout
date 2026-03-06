@@ -1,10 +1,12 @@
-﻿using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using System;
+using System.Diagnostics;
+using Unity.InferenceEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
+using Unity.MLAgents.Policies;
 using Unity.MLAgents.Sensors;
-using System;
-using System.Diagnostics;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -36,12 +38,18 @@ public class PaddleAgent : Agent
     private static readonly float[] PaddleScales = { 1.2f, 1f, 1f };
     private static readonly float[] BallSpeeds = { 8f, 10f, 14f };
 
+    //To drag and drop the models that can be used in the Unity Editor
+    [Header("Models")]
+    [SerializeField] public ModelAsset model1;
+    [SerializeField] public ModelAsset model2;
+    [SerializeField] public ModelAsset model3;
+
     public override void Initialize()
     {
         rb = GetComponent<Rigidbody2D>();
         if (moveAction != null)
             moveAction.action.Enable();
-
+        
         ApplyDifficulty();
     }
 
@@ -98,7 +106,7 @@ public class PaddleAgent : Agent
         if (Time.frameCount % 120 == 0)
         {
             var dr = GetComponent<DecisionRequester>();
-            UnityEngine.Debug.Log($"[PaddleAgent P{playerIndex}] Difficulty: {GameConfig.Instance.getPlayer(playerIndex)}");
+            UnityEngine.Debug.Log($"[PaddleAgent P{playerIndex}] Model: {GameConfig.Instance.getPlayer(playerIndex)}");
         }
     }
 
@@ -117,6 +125,26 @@ public class PaddleAgent : Agent
         rb.position = startPosition;
         // clears agent input so it doesn't drift
         inputX = 0f;
+    }
+
+    public void loadModel(string input)
+    {
+        switch(input)
+        {
+            case "Agent 1":
+                UnityEngine.Debug.Log("here");
+                SetModel("PaddleBehavior", model1, InferenceDevice.Default);
+                break;
+            case "Agent 2":
+                SetModel("PaddleBehavior", model2, InferenceDevice.Default);
+                break;
+            case "Agent 3":
+                SetModel("PaddleBehavior", model3, InferenceDevice.Default);
+                break;
+            default:
+                UnityEngine.Debug.Log("Here instead, string is: " + input);
+                break;
+        }
     }
 
 
