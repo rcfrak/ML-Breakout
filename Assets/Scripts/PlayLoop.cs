@@ -62,6 +62,8 @@ public class PlayLoop : MonoBehaviour
         paddlePosition = paddle.transform.position;
         ballPosition = ball.transform.position;
         
+        /* This is the first problematic bit of code for this commit
+         * We need a restart button to appear when both sides lose
         if (mode == GameMode.Play)
         {
             restartButton = uiDocument.rootVisualElement.Q<Button>("RestartButton");
@@ -77,6 +79,7 @@ public class PlayLoop : MonoBehaviour
                 uiDocument.rootVisualElement.style.display = DisplayStyle.None;
             }
         }
+        */
 
         //link to observer and scorer objects in GameManager
         observer = GetComponent<Observer>();
@@ -101,16 +104,26 @@ public class PlayLoop : MonoBehaviour
         
         if (mode == GameMode.Play)
         {
+            /*It looks like this code block also needs to be isolated to remove the retry button for now
             // This conditional is split to prepare for different win/loss UIs
             if (observer.sawWin)
             {
-                restartButton.style.display = DisplayStyle.Flex;
+                //restartButton.style.display = DisplayStyle.Flex;
             }
             else if (observer.sawLoss)
             {
-                restartButton.style.display = DisplayStyle.Flex;
-            } 
+                //restartButton.style.display = DisplayStyle.Flex;
+            }
+            */
+            // If player is out of balls, stop giving it more turns
+            if (observer.ballsDepleted)
+            {
+                return;
+            }
+
+            ResetPlayer();
         }
+
         // If in training mode, skip restart button and reset episode
         else if (mode == GameMode.Training)
         {
@@ -135,6 +148,14 @@ public class PlayLoop : MonoBehaviour
         paddle.ResetPaddle(paddlePosition);
         ball.ResetBall(ballPosition);
         ball.Launch();
+    }
+
+    void ResetPlayer()
+    {
+        observer.ResetObserver();
+        levelGenerator.ResetLevel();
+        paddle.ResetPaddle(paddlePosition);
+        ball.ResetBall(ballPosition);
     }
 
     void ResetEpisode()
