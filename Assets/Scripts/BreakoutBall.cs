@@ -94,7 +94,7 @@ public class BreakoutBall : MonoBehaviour
             // Destroy ball and reload game in Play mode
             if (playLoop.mode == PlayLoop.GameMode.Play)
             {
-                Destroy(gameObject);
+                playLoop.HandleBallLost();
             }
             // Stop ball, apply penalty, end agent episode, trigger loss condition to reset in Training mode
             else if (playLoop.mode == PlayLoop.GameMode.Training)

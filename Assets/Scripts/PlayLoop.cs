@@ -174,7 +174,26 @@ public class PlayLoop : MonoBehaviour
             scorer.writeLoss();
         }
 
+        observer.FullReset();
+
         //Now reload the scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // Register ball loss, check if no balls remain and end game if true
+    public void HandleBallLost()
+    {
+        observer.LoseBall();
+
+        if (observer.ballsDepleted)
+        {
+            observer.sawLoss = true;
+            observer.EpisodeOver = true;
+            Destroy(ball.gameObject);
+        }
+        else
+        {
+            ball.ResetBall(ballPosition);
+        }
     }
 }
