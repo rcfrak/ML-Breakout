@@ -1,18 +1,12 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MatchManager : MonoBehaviour
 {
     private bool leftLost = false;
     private bool rightLost = false;
     public Canvas matchEndCanvas;
-    private int numPlayers = 0;
-
-    //This function should be called the first time the play loop is run
-    public void addPlayer()
-    {
-        numPlayers++;
-    }
     
     //This function should be called by each game play loop when their side is out of lives
     public void addLoss(string side)
@@ -31,7 +25,7 @@ public class MatchManager : MonoBehaviour
         }
 
         //solo mode
-        if (numPlayers == 1)
+        if (SceneManager.GetActiveScene().name == "GameScene")
         {
             if (leftLost || rightLost)
             {
@@ -39,7 +33,7 @@ public class MatchManager : MonoBehaviour
             }
         }
         //split screen
-        else if (numPlayers == 2)
+        else if (SceneManager.GetActiveScene().name == "SplitScreen")
         {
             if (leftLost && rightLost)
             {
