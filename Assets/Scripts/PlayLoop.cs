@@ -81,6 +81,7 @@ public class PlayLoop : MonoBehaviour
             return;
         }
         
+        //Handle resetting the loop based on who is playing
         if (mode == GameMode.Play)
         {
             // If player is out of balls, stop giving it more turns
@@ -91,10 +92,9 @@ public class PlayLoop : MonoBehaviour
 
             ResetPlayer();
         }
-
-        // If in training mode, skip restart button and reset episode
         else if (mode == GameMode.Training)
         {
+            // If in training mode, skip restart button and reset episode
             ResetEpisode();
         }
         else if (mode == GameMode.Inference)
@@ -166,22 +166,17 @@ public class PlayLoop : MonoBehaviour
             observer.EpisodeOver = true;
             matchManager.addLoss(screen.ToString());
             
+            ball.ResetBall(ballPosition);
+            paddle.ResetPaddle(paddlePosition);
 
-            if (mode == GameMode.Play)
-            {
-                Destroy(ball.gameObject);
-            }
-            else if (mode == GameMode.Inference)
-            {
-                ball.ResetBall(ballPosition);
-                paddle.ResetPaddle(paddlePosition);
-            }
+            // hide the ball when the match is over
+            ball.gameObject.SetActive(false);
         }
         else
         {
             ball.ResetBall(ballPosition);
             paddle.ResetPaddle(paddlePosition);
-
+            // Need to launch the ball for the model
             if (mode == GameMode.Inference)
             {
                 ball.Launch();
