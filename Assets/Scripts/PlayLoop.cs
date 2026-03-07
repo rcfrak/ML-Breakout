@@ -81,49 +81,41 @@ public class PlayLoop : MonoBehaviour
             return;
         }
         
+        //The episode is over
         //Handle resetting the loop based on who is playing
-        if (mode == GameMode.Play)
+        if (mode == GameMode.Play || mode == GameMode.Inference)
         {
             // If player is out of balls, stop giving it more turns
             if (observer.ballsDepleted)
             {
+                //wait for the other screen to finish
                 return;
             }
-
-            ResetPlayer();
+            //Else the player won
+            if (observer.sawWin)
+            {
+                scorer.writeWin(screen.ToString());
+            }
+            ResetPlayerOrInference();
         }
         else if (mode == GameMode.Training)
         {
             // If in training mode, skip restart button and reset episode
             ResetEpisode();
         }
-        else if (mode == GameMode.Inference)
+    }
+
+    void ResetPlayerOrInference()
+    {
+        observer.ResetObserver();
+        levelGenerator.ResetLevel();
+        paddle.ResetPaddle(paddlePosition);
+        ball.ResetBall(ballPosition);
+        
+        if(mode == GameMode.Inference)
         {
-            // If AI is out of balls, stop giving it more turns
-            if (observer.ballsDepleted)
-            {
-                return;
-            }
-
-            ResetInference();
+            ball.Launch();
         }
-    }
-
-    void ResetInference()
-    {
-        observer.ResetObserver();
-        levelGenerator.ResetLevel();
-        paddle.ResetPaddle(paddlePosition);
-        ball.ResetBall(ballPosition);
-        ball.Launch();
-    }
-
-    void ResetPlayer()
-    {
-        observer.ResetObserver();
-        levelGenerator.ResetLevel();
-        paddle.ResetPaddle(paddlePosition);
-        ball.ResetBall(ballPosition);
     }
 
     void ResetEpisode()
@@ -164,6 +156,7 @@ public class PlayLoop : MonoBehaviour
         {
             observer.sawLoss = true;
             observer.EpisodeOver = true;
+            scorer.writeLoss(screen.ToString());
             matchManager.addLoss(screen.ToString());
             
             ball.ResetBall(ballPosition);
