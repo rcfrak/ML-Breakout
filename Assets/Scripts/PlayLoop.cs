@@ -7,6 +7,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class PlayLoop : MonoBehaviour
 {
@@ -85,6 +86,13 @@ public class PlayLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Return to main menu if Escape key is pressed
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            SceneManager.LoadScene("MainMenu");
+            return;
+        }
+
         // Check if episode is over
         if (!observer.EpisodeOver)
         {
