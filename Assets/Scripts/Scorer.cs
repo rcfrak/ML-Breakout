@@ -33,21 +33,21 @@ public class Scorer : MonoBehaviour
         //Debug.Log($"Cumulative Reward: {GetCumulativeReward()}");
     }
 
-    public void writeWin()
+    public void writeWin(string side)
     {
-        ScoreStorage.Instance.addScore(score);
-        ScoreStorage.Instance.addWin();
+        ScoreStorage.Instance.addScore(side, score);
+        ScoreStorage.Instance.addWin(side);
     }
 
-    public void writeLoss()
+    public void writeLoss(string side)
     {
-        ScoreStorage.Instance.addScore(score);
-        ScoreStorage.Instance.gameLost();
+        ScoreStorage.Instance.addScore(side, score);
+        ScoreStorage.Instance.gameLost(side);
     }
 
-    public int getTotalScore()
+    public int getTotalScore(string side)
     {
-        return score + ScoreStorage.Instance.getSavedScore();
+        return score + ScoreStorage.Instance.getSavedScore(side);
     }
 
     

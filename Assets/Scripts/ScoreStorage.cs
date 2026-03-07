@@ -31,38 +31,78 @@ public class ScoreStorage : MonoBehaviour
         }
     }
 
-    private int savedScore = 0;
-    private int roundsWon = 0;
+    private int savedScoreLeft = 0;
+    private int savedScoreRight = 0;
+    private int roundsWonLeft = 0;
+    private int roundsWonRight = 0;
 
     // Call this function to add a score after a win or loss
-    public void addScore(int score)
+    public void addScore(string side, int score)
     {
-        savedScore += score;
+        if (side == "Left")
+        {
+            savedScoreLeft += score;
+        }
+        else if (side == "Right")
+        {
+            savedScoreRight += score;
+        }
+
+
     }
 
     // Increment the number of rounds won in a play session
-    public void addWin()
+    public void addWin(string side)
     {
-        roundsWon++;
+        if (side == "Left")
+        {
+            roundsWonLeft++;
+        }
+        else if (side == "Right")
+        {
+            roundsWonRight++;
+        }
     }
 
     // Reset the cumulative score and number of wins when the ball is lost
-    public void gameLost()
+    public void gameLost(string side)
     {
-        savedScore = 0;
-        roundsWon = 0;
+        if (side == "Left")
+        {
+            savedScoreLeft = 0;
+            roundsWonLeft = 0;
+        }
+        else if (side == "Right")
+        {
+            savedScoreRight = 0;
+            roundsWonRight = 0;
+        }
     }
 
     // Returns the cumulative score obtained from prior, sequential wins
-    public int getSavedScore()
+    public int getSavedScore(string side)
     {
-        return savedScore;
+        if (side == "Left")
+        {
+            return savedScoreLeft;
+        }
+        else
+        {
+            return savedScoreRight;
+        }
     }
 
     // Returns the number of rounds won
-    public int getRoundsWon()
+    public int getRoundsWon(string side)
     {
-        return roundsWon;
+        if (side == "Left")
+        {
+            return roundsWonLeft;
+        }
+        else
+        {
+            return roundsWonRight;
+        }
     }
 }
 

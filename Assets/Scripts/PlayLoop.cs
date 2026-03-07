@@ -131,11 +131,11 @@ public class PlayLoop : MonoBehaviour
         //tell the scorer to write data before reloading the scene
         if (observer.sawWin)
         {
-            scorer.writeWin();
+            scorer.writeWin(screen.ToString());
         }
         else if (observer.sawLoss)
         {
-            scorer.writeLoss();
+            scorer.writeLoss(screen.ToString());
         }
         paddle.EndEpisode();
 
