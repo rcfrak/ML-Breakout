@@ -107,7 +107,7 @@ public class BreakoutBall : MonoBehaviour
             else if (playLoop.mode == PlayLoop.GameMode.Inference)
             {
                 rb.linearVelocity = Vector2.zero;
-                playLoop.TriggerLoss();
+                playLoop.HandleBallLost();
             }
         }
         else if (collision.collider.CompareTag("Brick"))

@@ -118,6 +118,12 @@ public class PlayLoop : MonoBehaviour
         }
         else if (mode == GameMode.Inference)
         {
+            // If AI is out of balls, stop giving it more turns
+            if (observer.ballsDepleted)
+            {
+                return;
+            }
+
             ResetInference();
         }
     }
@@ -189,11 +195,24 @@ public class PlayLoop : MonoBehaviour
         {
             observer.sawLoss = true;
             observer.EpisodeOver = true;
-            Destroy(ball.gameObject);
+
+            if (mode == GameMode.Play)
+            {
+                Destroy(ball.gameObject);
+            }
+            else if (mode == GameMode.Inference)
+            {
+                ball.ResetBall(ballPosition);
+            }
         }
         else
         {
             ball.ResetBall(ballPosition);
+
+            if (mode == GameMode.Inference)
+            {
+                ball.Launch();
+            }
         }
     }
 }

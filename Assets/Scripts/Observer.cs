@@ -63,12 +63,12 @@ public class Observer : MonoBehaviour
 
     }
 
-    // Reduce ball count when player loses ball
+    // Reduce ball count when player loses ball, reduce number of ball images
     public void LoseBall()
     {
         ballCount = Mathf.Max(0, ballCount - 1);
         ballCountImage[ballCount].SetActive(false);
-        Debug.Log($"Lost ball. Remaining: {ballCount}");
+        //Debug.Log($"Lost ball. Remaining: {ballCount}");
     }
 
     private void CountBricks()
