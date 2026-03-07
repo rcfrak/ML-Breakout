@@ -45,10 +45,12 @@ public class PlayLoop : MonoBehaviour
         if (screen == Screen.Left)
         {
             player = GameConfig.Instance.getPlayer(1);
+            matchManager.addPlayer();
         }
         else if (screen == Screen.Right)
         {
             player = GameConfig.Instance.getPlayer(2);
+            matchManager.addPlayer();
         }
 
         if (player == "Player") {

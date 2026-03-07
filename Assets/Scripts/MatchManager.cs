@@ -6,7 +6,14 @@ public class MatchManager : MonoBehaviour
     private bool leftLost = false;
     private bool rightLost = false;
     public Canvas matchEndCanvas;
+    private int numPlayers = 0;
 
+    //This function should be called the first time the play loop is run
+    public void addPlayer()
+    {
+        numPlayers++;
+    }
+    
     //This function should be called by each game play loop when their side is out of lives
     public void addLoss(string side)
     {
@@ -23,10 +30,23 @@ public class MatchManager : MonoBehaviour
             Debug.Log("The match manager is being used incorrectly with side named: " + side);
         }
 
-        if (leftLost && rightLost)
+        //solo mode
+        if (numPlayers == 1)
         {
-            gameOver();
+            if (leftLost || rightLost)
+            {
+                gameOver();
+            }
         }
+        //split screen
+        else if (numPlayers == 2)
+        {
+            if (leftLost && rightLost)
+            {
+                gameOver();
+            }
+        }
+        
     }
     void gameOver()
     {
