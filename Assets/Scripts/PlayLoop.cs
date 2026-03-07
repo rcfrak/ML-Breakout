@@ -5,7 +5,6 @@
  */
 
 using UnityEngine;
-using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
@@ -25,8 +24,6 @@ public class PlayLoop : MonoBehaviour
     public LevelGenerator levelGenerator;
     private Observer observer;
     private Scorer scorer;
-    //private Button restartButton;
-    //public UIDocument uiDocument;
     public Vector2 ballPosition;
     public Vector2 paddlePosition;
     public MatchManager matchManager;
@@ -62,25 +59,6 @@ public class PlayLoop : MonoBehaviour
 
         paddlePosition = paddle.transform.position;
         ballPosition = ball.transform.position;
-        
-        /* This is the first problematic bit of code for this commit
-         * We need a restart button to appear when both sides lose
-        if (mode == GameMode.Play)
-        {
-            restartButton = uiDocument.rootVisualElement.Q<Button>("RestartButton");
-            restartButton.style.display = DisplayStyle.None;
-            //adds method to list of things done when the button is clicked
-            restartButton.clicked += ReloadScene;
-        }
-        // If game mode is not set to play, hide UI element.
-        else
-        {
-            if (uiDocument != null)
-            {
-                uiDocument.rootVisualElement.style.display = DisplayStyle.None;
-            }
-        }
-        */
 
         //link to observer and scorer objects in GameManager
         observer = GetComponent<Observer>();
@@ -105,17 +83,6 @@ public class PlayLoop : MonoBehaviour
         
         if (mode == GameMode.Play)
         {
-            /*It looks like this code block also needs to be isolated to remove the retry button for now
-            // This conditional is split to prepare for different win/loss UIs
-            if (observer.sawWin)
-            {
-                //restartButton.style.display = DisplayStyle.Flex;
-            }
-            else if (observer.sawLoss)
-            {
-                //restartButton.style.display = DisplayStyle.Flex;
-            }
-            */
             // If player is out of balls, stop giving it more turns
             if (observer.ballsDepleted)
             {
@@ -186,26 +153,6 @@ public class PlayLoop : MonoBehaviour
     {
         observer.sawLoss = true;
         observer.EpisodeOver = true;
-    }
-
-    //Reload the scene by loading the scene with current scene name
-    //See referenced tutorial step 9.1
-    void ReloadScene()
-    {
-        //tell the scorer to write data before reloading the scene
-        if (observer.sawWin)
-        {
-            scorer.writeWin();
-        }
-        else if (observer.sawLoss)
-        {
-            scorer.writeLoss();
-        }
-
-        observer.FullReset();
-
-        //Now reload the scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     // Register ball loss, check if no balls remain and end game if true
