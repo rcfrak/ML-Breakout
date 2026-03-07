@@ -928,6 +928,7 @@ GameObject:
   - component: {fileID: 349335874}
   - component: {fileID: 349335873}
   - component: {fileID: 349335872}
+  - component: {fileID: 349335875}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -1037,6 +1038,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 349335870}
   m_CullTransparentMesh: 1
+--- !u!114 &349335875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349335870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf83fe69ce419b3439fba58ded6edbcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RestartButton
+  button: {fileID: 349335872}
 --- !u!1 &390809873
 GameObject:
   m_ObjectHideFlags: 0
@@ -2725,6 +2739,7 @@ GameObject:
   - component: {fileID: 1191448378}
   - component: {fileID: 1191448377}
   - component: {fileID: 1191448376}
+  - component: {fileID: 1191448379}
   m_Layer: 5
   m_Name: MainMenuButton
   m_TagString: Untagged
@@ -2834,6 +2849,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1191448374}
   m_CullTransparentMesh: 1
+--- !u!114 &1191448379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191448374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c780932ac5551024cb8eb721f63fb67a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MainMenuButton
+  button: {fileID: 1191448376}
 --- !u!1 &1278510864
 GameObject:
   m_ObjectHideFlags: 0
