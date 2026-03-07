@@ -5,7 +5,6 @@
  */
 
 using UnityEngine;
-using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
@@ -25,10 +24,9 @@ public class PlayLoop : MonoBehaviour
     public LevelGenerator levelGenerator;
     private Observer observer;
     private Scorer scorer;
-    private Button restartButton;
-    public UIDocument uiDocument;
     public Vector2 ballPosition;
     public Vector2 paddlePosition;
+    public MatchManager matchManager;
     
     public enum Screen
     {
@@ -61,22 +59,6 @@ public class PlayLoop : MonoBehaviour
 
         paddlePosition = paddle.transform.position;
         ballPosition = ball.transform.position;
-        
-        if (mode == GameMode.Play)
-        {
-            restartButton = uiDocument.rootVisualElement.Q<Button>("RestartButton");
-            restartButton.style.display = DisplayStyle.None;
-            //adds method to list of things done when the button is clicked
-            restartButton.clicked += ReloadScene;
-        }
-        // If game mode is not set to play, hide UI element.
-        else
-        {
-            if (uiDocument != null)
-            {
-                uiDocument.rootVisualElement.style.display = DisplayStyle.None;
-            }
-        }
 
         //link to observer and scorer objects in GameManager
         observer = GetComponent<Observer>();
@@ -99,42 +81,41 @@ public class PlayLoop : MonoBehaviour
             return;
         }
         
-        if (mode == GameMode.Play)
+        //The episode is over
+        //Handle resetting the loop based on who is playing
+        if (mode == GameMode.Play || mode == GameMode.Inference)
         {
-            // This conditional is split to prepare for different win/loss UIs
-            if (observer.sawWin)
-            {
-                restartButton.style.display = DisplayStyle.Flex;
-            }
-            else if (observer.sawLoss)
-            {
-                restartButton.style.display = DisplayStyle.Flex;
-            } 
-        }
-        // If in training mode, skip restart button and reset episode
-        else if (mode == GameMode.Training)
-        {
-            ResetEpisode();
-        }
-        else if (mode == GameMode.Inference)
-        {
-            // If AI is out of balls, stop giving it more turns
+            // If player is out of balls, stop giving it more turns
             if (observer.ballsDepleted)
             {
+                //wait for the other screen to finish
                 return;
             }
-
-            ResetInference();
+            //Else the player won
+            if (observer.sawWin)
+            {
+                scorer.writeWin(screen.ToString());
+            }
+            ResetPlayerOrInference();
+        }
+        else if (mode == GameMode.Training)
+        {
+            // If in training mode, skip restart button and reset episode
+            ResetEpisode();
         }
     }
 
-    void ResetInference()
+    void ResetPlayerOrInference()
     {
         observer.ResetObserver();
         levelGenerator.ResetLevel();
         paddle.ResetPaddle(paddlePosition);
         ball.ResetBall(ballPosition);
-        ball.Launch();
+        
+        if(mode == GameMode.Inference)
+        {
+            ball.Launch();
+        }
     }
 
     void ResetEpisode()
@@ -142,11 +123,11 @@ public class PlayLoop : MonoBehaviour
         //tell the scorer to write data before reloading the scene
         if (observer.sawWin)
         {
-            scorer.writeWin();
+            scorer.writeWin(screen.ToString());
         }
         else if (observer.sawLoss)
         {
-            scorer.writeLoss();
+            scorer.writeLoss(screen.ToString());
         }
         paddle.EndEpisode();
 
@@ -166,26 +147,6 @@ public class PlayLoop : MonoBehaviour
         observer.EpisodeOver = true;
     }
 
-    //Reload the scene by loading the scene with current scene name
-    //See referenced tutorial step 9.1
-    void ReloadScene()
-    {
-        //tell the scorer to write data before reloading the scene
-        if (observer.sawWin)
-        {
-            scorer.writeWin();
-        }
-        else if (observer.sawLoss)
-        {
-            scorer.writeLoss();
-        }
-
-        observer.FullReset();
-
-        //Now reload the scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
     // Register ball loss, check if no balls remain and end game if true
     public void HandleBallLost()
     {
@@ -195,20 +156,20 @@ public class PlayLoop : MonoBehaviour
         {
             observer.sawLoss = true;
             observer.EpisodeOver = true;
+            scorer.writeLoss(screen.ToString());
+            matchManager.addLoss(screen.ToString());
+            
+            ball.ResetBall(ballPosition);
+            paddle.ResetPaddle(paddlePosition);
 
-            if (mode == GameMode.Play)
-            {
-                Destroy(ball.gameObject);
-            }
-            else if (mode == GameMode.Inference)
-            {
-                ball.ResetBall(ballPosition);
-            }
+            // hide the ball when the match is over
+            ball.gameObject.SetActive(false);
         }
         else
         {
             ball.ResetBall(ballPosition);
-
+            paddle.ResetPaddle(paddlePosition);
+            // Need to launch the ball for the model
             if (mode == GameMode.Inference)
             {
                 ball.Launch();
