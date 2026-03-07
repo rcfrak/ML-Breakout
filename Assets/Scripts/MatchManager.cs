@@ -8,13 +8,13 @@ public class MatchManager : MonoBehaviour
     public Canvas matchEndCanvas;
 
     //This function should be called by each game play loop when their side is out of lives
-    void addLoss(string side)
+    public void addLoss(string side)
     {
-        if (side == "left")
+        if (side == "Left")
         {
             leftLost = true;
         }
-        else if (side == "right")
+        else if (side == "Right")
         {
             rightLost = true;
         }

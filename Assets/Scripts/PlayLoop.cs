@@ -29,6 +29,7 @@ public class PlayLoop : MonoBehaviour
     //public UIDocument uiDocument;
     public Vector2 ballPosition;
     public Vector2 paddlePosition;
+    public MatchManager matchManager;
     
     public enum Screen
     {
@@ -216,6 +217,8 @@ public class PlayLoop : MonoBehaviour
         {
             observer.sawLoss = true;
             observer.EpisodeOver = true;
+            matchManager.addLoss(screen.ToString());
+            
 
             if (mode == GameMode.Play)
             {

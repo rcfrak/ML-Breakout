@@ -2872,6 +2872,7 @@ MonoBehaviour:
   levelGenerator: {fileID: 985127509}
   ballPosition: {x: 0, y: 0}
   paddlePosition: {x: 0, y: 0}
+  matchManager: {fileID: 1939627756}
   screen: 0
 --- !u!114 &1278510866
 MonoBehaviour:
@@ -3121,6 +3122,7 @@ MonoBehaviour:
   levelGenerator: {fileID: 561264517}
   ballPosition: {x: 0, y: 0}
   paddlePosition: {x: 0, y: 0}
+  matchManager: {fileID: 1939627756}
   screen: 1
 --- !u!114 &1450127867
 MonoBehaviour:
