@@ -25,8 +25,8 @@ public class PlayLoop : MonoBehaviour
     public LevelGenerator levelGenerator;
     private Observer observer;
     private Scorer scorer;
-    private Button restartButton;
-    public UIDocument uiDocument;
+    //private Button restartButton;
+    //public UIDocument uiDocument;
     public Vector2 ballPosition;
     public Vector2 paddlePosition;
     

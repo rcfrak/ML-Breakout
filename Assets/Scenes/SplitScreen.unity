@@ -2416,7 +2416,6 @@ MonoBehaviour:
   ball: {fileID: 80147943}
   paddle: {fileID: 551092890}
   levelGenerator: {fileID: 985127509}
-  uiDocument: {fileID: 1278510866}
   ballPosition: {x: 0, y: 0}
   paddlePosition: {x: 0, y: 0}
   screen: 0
@@ -2427,7 +2426,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1278510864}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
@@ -2666,7 +2665,6 @@ MonoBehaviour:
   ball: {fileID: 910279865}
   paddle: {fileID: 1663152387}
   levelGenerator: {fileID: 561264517}
-  uiDocument: {fileID: 1450127867}
   ballPosition: {x: 0, y: 0}
   paddlePosition: {x: 0, y: 0}
   screen: 1
@@ -2677,7 +2675,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1450127865}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
