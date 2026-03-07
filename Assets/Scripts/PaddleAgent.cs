@@ -81,7 +81,7 @@ public class PaddleAgent : Agent
         if (breakoutBall != null)
             breakoutBall.ballSpeed = BallSpeeds[diffIndex];
 
-        UnityEngine.Debug.Log($"[PaddleAgent P{playerIndex}] Difficulty: {difficulty}");
+        //UnityEngine.Debug.Log($"[PaddleAgent P{playerIndex}] Difficulty: {difficulty}");
     }
 
     void FixedUpdate()
@@ -93,12 +93,15 @@ public class PaddleAgent : Agent
 
         MovePaddle();
 
-        // Reward for being close to the ball
-        // Attempting to help track better
-        float disX = Mathf.Abs(transform.position.x - ballTransform.position.x);
-        float proxReward = Mathf.Clamp01(1f - disX / (rightBoundary - leftBoundary));
+        if (ballTransform != null)
+        {
+            // Reward for being close to the ball
+            // Attempting to help track better
+            float disX = Mathf.Abs(transform.position.x - ballTransform.position.x);
+            float proxReward = Mathf.Clamp01(1f - disX / (rightBoundary - leftBoundary));
 
-        AddReward(0.005f * proxReward);
+            AddReward(0.005f * proxReward);
+        }
 
         //Reward to move more since paddle started to sit in the middle
         AddReward(0.001f);
@@ -106,7 +109,7 @@ public class PaddleAgent : Agent
         if (Time.frameCount % 120 == 0)
         {
             var dr = GetComponent<DecisionRequester>();
-            UnityEngine.Debug.Log($"[PaddleAgent P{playerIndex}] Model: {GameConfig.Instance.getPlayer(playerIndex)}");
+            //UnityEngine.Debug.Log($"[PaddleAgent P{playerIndex}] Model: {GameConfig.Instance.getPlayer(playerIndex)}");
         }
     }
 
@@ -164,12 +167,26 @@ public class PaddleAgent : Agent
             sensor.AddObservation(NormX(ballTransform.position.x) - NormX(transform.position.x));
             //Debug.Log($"Paddle: {NormX(transform.position.x)} Ball: ({NormX(ballTransform.position.x)}, {ballTransform.position.y})");
         }
+        else
+        {
+            //Reduce observations if ball is destroyed to avoid ML agent observation count errors
+            sensor.AddObservation(0f);
+            sensor.AddObservation(0f);
+            sensor.AddObservation(0f);
+        }
+
         if (ballRb != null)
         {
             // Observation of ball velocity
             Vector2 v = ballRb.linearVelocity.normalized;
             sensor.AddObservation(v.x);
             sensor.AddObservation(v.y);
+        }
+        else
+        {
+            //Reduce observations if ball is destroyed to avoid ML agent observation count errors
+            sensor.AddObservation(0f);
+            sensor.AddObservation(0f);
         }
     }
 

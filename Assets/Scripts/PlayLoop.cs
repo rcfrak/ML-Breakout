@@ -7,6 +7,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class PlayLoop : MonoBehaviour
 {
@@ -85,6 +86,13 @@ public class PlayLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Return to main menu if Escape key is pressed
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            SceneManager.LoadScene("MainMenu");
+            return;
+        }
+
         // Check if episode is over
         if (!observer.EpisodeOver)
         {
@@ -110,6 +118,12 @@ public class PlayLoop : MonoBehaviour
         }
         else if (mode == GameMode.Inference)
         {
+            // If AI is out of balls, stop giving it more turns
+            if (observer.ballsDepleted)
+            {
+                return;
+            }
+
             ResetInference();
         }
     }
@@ -166,7 +180,39 @@ public class PlayLoop : MonoBehaviour
             scorer.writeLoss();
         }
 
+        observer.FullReset();
+
         //Now reload the scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // Register ball loss, check if no balls remain and end game if true
+    public void HandleBallLost()
+    {
+        observer.LoseBall();
+
+        if (observer.ballsDepleted)
+        {
+            observer.sawLoss = true;
+            observer.EpisodeOver = true;
+
+            if (mode == GameMode.Play)
+            {
+                Destroy(ball.gameObject);
+            }
+            else if (mode == GameMode.Inference)
+            {
+                ball.ResetBall(ballPosition);
+            }
+        }
+        else
+        {
+            ball.ResetBall(ballPosition);
+
+            if (mode == GameMode.Inference)
+            {
+                ball.Launch();
+            }
+        }
     }
 }

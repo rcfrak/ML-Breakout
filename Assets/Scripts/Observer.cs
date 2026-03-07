@@ -10,6 +10,7 @@ public class Observer : MonoBehaviour
 {
     public GameObject breakoutBall;
     public GameObject levelGenerator;
+    public GameObject[] ballCountImage;
     
     // flags for PlayLoop to act on
     public bool sawLoss = false;
@@ -22,6 +23,8 @@ public class Observer : MonoBehaviour
     // The number of bricks that have been broken thus far
     private int bricksBroken = 0;
     public int paddleHitCount {get; private set;}
+    public int ballCount = 3;
+    public bool ballsDepleted => ballCount <= 0;
 
     public bool EpisodeOver;
 
@@ -58,6 +61,14 @@ public class Observer : MonoBehaviour
             EpisodeOver = true;
         }
 
+    }
+
+    // Reduce ball count when player loses ball, reduce number of ball images
+    public void LoseBall()
+    {
+        ballCount = Mathf.Max(0, ballCount - 1);
+        ballCountImage[ballCount].SetActive(false);
+        //Debug.Log($"Lost ball. Remaining: {ballCount}");
     }
 
     private void CountBricks()
@@ -101,5 +112,12 @@ public class Observer : MonoBehaviour
         numBricks = 0;
         initialBricks = 0;
         bricksBroken = 0;
+    }
+
+    // Full reset also resets ball count, whereas ResetObserver preserves existing count between rounds
+    public void FullReset()
+    {
+        ResetObserver();
+        ballCount = 3;
     }
 }
