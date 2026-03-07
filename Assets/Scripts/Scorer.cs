@@ -27,27 +27,27 @@ public class Scorer : MonoBehaviour
         score = observer.getBricksBroken() * scoreMultiplier;
         paddleHitCount = observer.getPaddleHits();
         // Debug.Log($"Paddle hits: {paddleHitCount}");
-        // Debug.Log($"Score: {getTotalScore()}");
+        UnityEngine.Debug.Log($"Left Score: {getTotalScore("Left")}");
         // Debug.Log($"Rounds Won: {ScoreStorage.Instance.getRoundsWon()}");
         //Debug.Log(getTotalScore());
         //Debug.Log($"Cumulative Reward: {GetCumulativeReward()}");
     }
 
-    public void writeWin()
+    public void writeWin(string side)
     {
-        ScoreStorage.Instance.addScore(score);
-        ScoreStorage.Instance.addWin();
+        ScoreStorage.Instance.addScore(side, score);
+        ScoreStorage.Instance.addWin(side);
     }
 
-    public void writeLoss()
+    public void writeLoss(string side)
     {
-        ScoreStorage.Instance.addScore(score);
-        ScoreStorage.Instance.gameLost();
+        ScoreStorage.Instance.addScore(side, score);
+        ScoreStorage.Instance.gameLost(side);
     }
 
-    public int getTotalScore()
+    public int getTotalScore(string side)
     {
-        return score + ScoreStorage.Instance.getSavedScore();
+        return score + ScoreStorage.Instance.getSavedScore(side);
     }
 
     
