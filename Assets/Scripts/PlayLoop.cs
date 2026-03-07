@@ -203,11 +203,13 @@ public class PlayLoop : MonoBehaviour
             else if (mode == GameMode.Inference)
             {
                 ball.ResetBall(ballPosition);
+                paddle.ResetPaddle(paddlePosition);
             }
         }
         else
         {
             ball.ResetBall(ballPosition);
+            paddle.ResetPaddle(paddlePosition);
 
             if (mode == GameMode.Inference)
             {
