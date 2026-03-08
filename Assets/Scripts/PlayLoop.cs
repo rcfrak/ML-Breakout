@@ -73,6 +73,8 @@ public class PlayLoop : MonoBehaviour
         // Return to main menu if Escape key is pressed
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
+            // Clear score when returning to main menu
+            ScoreStorage.Instance.ResetAllScore();
             SceneManager.LoadScene("MainMenu");
             return;
         }

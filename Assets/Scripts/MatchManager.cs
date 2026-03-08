@@ -44,6 +44,8 @@ public class MatchManager : MonoBehaviour
     }
     void gameOver()
     {
+        // Clear score on game end
+        ScoreStorage.Instance.ResetAllScore();
         matchEndCanvas.gameObject.SetActive(true);
     }
 }
