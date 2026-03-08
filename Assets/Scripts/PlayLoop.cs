@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEditor.Experimental.Rendering;
 
 public class PlayLoop : MonoBehaviour
 {
@@ -73,6 +74,8 @@ public class PlayLoop : MonoBehaviour
         // Return to main menu if Escape key is pressed
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
+            // Clear score when exit to main menu
+            ScoreStorage.Instance.ResetAllScore();
             SceneManager.LoadScene("MainMenu");
             return;
         }
