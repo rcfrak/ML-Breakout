@@ -25,7 +25,7 @@ public class PaddleAgent : Agent
     [SerializeField] private float bottomBoundary = -9.5f;
 
     [Header("Difficulty")]
-    [SerializeField] private int playerIndex = 2;
+    //[SerializeField] private int playerIndex = 2;
 
     [Header("Ball (Observations)")]
     [SerializeField] private Transform ballTransform;

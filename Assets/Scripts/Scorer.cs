@@ -27,7 +27,7 @@ public class Scorer : MonoBehaviour
         score = observer.getBricksBroken() * scoreMultiplier;
         paddleHitCount = observer.getPaddleHits();
         // Debug.Log($"Paddle hits: {paddleHitCount}");
-        UnityEngine.Debug.Log($"Left Score: {getTotalScore("Left")}");
+        //UnityEngine.Debug.Log($"Left Score: {getTotalScore("Left")}");
         // Debug.Log($"Rounds Won: {ScoreStorage.Instance.getRoundsWon()}");
         //Debug.Log(getTotalScore());
         //Debug.Log($"Cumulative Reward: {GetCumulativeReward()}");
