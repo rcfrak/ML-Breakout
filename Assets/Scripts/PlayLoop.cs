@@ -7,6 +7,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PlayLoop : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class PlayLoop : MonoBehaviour
     }
     public Screen screen;
     private string player;
+    [SerializeField] private TextMeshProUGUI scoreDisplay;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -74,6 +76,8 @@ public class PlayLoop : MonoBehaviour
             SceneManager.LoadScene("MainMenu");
             return;
         }
+
+        UpdateScoreDisplay();
 
         // Check if episode is over
         if (!observer.EpisodeOver)
@@ -175,5 +179,16 @@ public class PlayLoop : MonoBehaviour
                 ball.Launch();
             }
         }
+    }
+
+    void UpdateScoreDisplay()
+    {
+        if (scoreDisplay == null)
+        {
+            return;
+        }
+        
+        int totalScore = scorer.getTotalScore(screen.ToString());
+        scoreDisplay.text = totalScore.ToString("00000"); 
     }
 }
