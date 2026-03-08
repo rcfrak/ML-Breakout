@@ -44,6 +44,8 @@ public class MatchManager : MonoBehaviour
     }
     void gameOver()
     {
+        // Clean up score when exit to main menu
+        ScoreStorage.Instance.ResetAllScore();
         matchEndCanvas.gameObject.SetActive(true);
     }
 }

@@ -104,5 +104,14 @@ public class ScoreStorage : MonoBehaviour
             return roundsWonRight;
         }
     }
+
+    // Clean up when exiting to main menu
+    public void ResetAllScore()
+    {
+        savedScoreLeft = 0;
+        savedScoreRight = 0;
+        roundsWonLeft = 0;
+        roundsWonRight = 0;
+    }
 }
 
